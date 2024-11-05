@@ -32,7 +32,7 @@ nav ul li a:hover {
     color: black;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
@@ -57,6 +57,11 @@ div.animalPictureAndCheckboxDiv {
     flex: 1;
     width: 100%;
     max-width: 100%;
+}
+
+div.animalPictureAndCheckboxDiv img {
+    width: 90px;
+    max-width: 90px;
 }
 
 div.animalPictureDiv {

@@ -12,11 +12,12 @@
     </ul>
 </nav>
 <h1>Specific Pet</h1>
-<form action="searchForPets" method="post">
+<h2>What kind of pet are you looking for?</h2>
+<form action="searchForPets" method="get">
     <div class="allAnimalTypesDiv">
         <div class="animalPictureAndCheckboxDiv">
             <div class="animalPictureDiv">
-                <img src="images/default_dog" alt="A dog.">
+                <img src="images/specific_pet_dog_outline.png" alt="A dog.">
             </div>
             <div class="animalCheckboxDiv">
                 <input type="checkbox" id="dogCheckbox" name="dogCheckbox" value="dog">
@@ -25,7 +26,7 @@
         </div>
         <div class="animalPictureAndCheckboxDiv">
             <div class="animalPictureDiv">
-                <img src="images/default_cat" alt="A cat.">
+                <img src="images/specific_pet_cat_outline.png" alt="A cat.">
             </div>
             <div class="animalCheckboxDiv">
                 <input type="checkbox" id="catCheckbox" name="catCheckbox" value="cat">
@@ -33,6 +34,25 @@
             </div>
         </div>
     </div>
+    <hr>
+    <div class="allAnimalAgesDiv">
+        <label for="ageInputs">Age</label>
+        <div id="ageInputs">
+            <input type="number" min="0" max="100" id="minAnimalAge" name="minAnimalAge" placeholder="min">
+            -
+            <input type="number" min="0" max="100" id="maxAnimalAge" name="maxAnimalAge" placeholder="max">
+        </div>
+    </div>
+    <hr>
+    <div class="allAnimalWeightsDiv">
+        <label for="weightInputs">Weight</label>
+        <div id="weightInputs">
+            <input type="number" min="0" max="100" id="minAnimalWeight" name="minAnimalAge" placeholder="min">
+            -
+            <input type="number" min="0" max="300" id="maxAnimalWeight" name="maxAnimalAge" placeholder="max">
+        </div>
+    </div>
+    <hr>
     <div class="submitButtonDiv">
         <input type="submit" name="submitButton" value="Submit">
     </div>
