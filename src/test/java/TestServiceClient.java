@@ -16,15 +16,17 @@ public class TestServiceClient {
 
         Client client = ClientBuilder.newClient();
         WebTarget target =
-                client.target("https://swapi.info/api/planets/1");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+                client.target("https://swapi.dev/api/planets/1");
+        String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
 
-        if (response.getStatus() == 200) {
+        //logger.error(response);
+
+        /*if (response.getStatus() == 200) {
             logger.error("We got a 200!");
         }
         else {
             logger.error("We did NOT get a 200..");
-        }
+        }*/
         //assertEquals("???", response);
     }
 }
