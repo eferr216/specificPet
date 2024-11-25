@@ -16,6 +16,9 @@
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
+# Pool and App Client Info
+src/main/resources/cognito.properties
+
 # Gradle:
 .idea/gradle.xml
 .idea/libraries

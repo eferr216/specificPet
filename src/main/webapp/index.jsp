@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Specific Pet</title>
@@ -8,7 +9,17 @@
 <body id="homepage">
 <nav>
     <ul>
-        <li><a href="#">Bookmarks</a></li>
+        <li><a href="index.jsp">Home</a></li>
+        <c:choose>
+            <c:when test="${empty userName}">
+                <li><a href="logIn">Log In</a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="#">Pet Requests</a></li>
+                <li><a href="#">Bookmarks</a></li>
+                <li><a href="#">Logout</a></li>
+            </c:otherwise>
+        </c:choose>
     </ul>
 </nav>
 <h1>What kind of pet are you looking for?</h1>
