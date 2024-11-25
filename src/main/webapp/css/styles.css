@@ -9,10 +9,48 @@ body {
     max-width: 100%;
 }
 
+body#homepage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../images/homepage_background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.03; /* Adjust opacity of the background image */
+    z-index: -1; /* Make sure the background is behind the content */
+}
+
+body#homepage h1 {
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-family: "Book Antiqua";
+}
+
+body#homepage form {
+    width: 80%;
+    max-width: 80%;
+    border-radius: 9px;
+    border: 1px dotted grey;
+    padding: 10px 30px;
+    margin: 0 auto;
+    background-color: rgba(135, 206, 250, .05);
+    box-shadow: 2px 2px 3px grey;
+}
+
+body#homepage div.homepageFormDiv {
+    width: 100%;
+    max-width: 100%;
+}
+
 nav {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px dotted grey;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
+    background-color: rgba(135, 206, 250, .05);
 }
 
 nav ul {
@@ -24,15 +62,14 @@ nav ul li {
 }
 
 nav ul li a {
-    color: blue;
     text-decoration: none;
 }
 
 nav ul li a:hover {
-    color: black;
+    color: navy;
 }
 
-h1, h2 {
+h1 {
     text-align: center;
 }
 
@@ -41,15 +78,28 @@ input[type='checkbox'] {
     margin: 0 auto;
 }
 
+input[type='text'] {
+
+}
+
 input[type='submit'] {
-    padding: 5px;
+    padding: 7px;
 }
 
 div.allAnimalTypesDiv {
     display: flex;
+    align-items: center;
     width: 100%;
     max-width: 100%;
-    margin: 20px 0;
+    margin: 30px 0;
+}
+
+div#ageInputs, div#weightInputs {
+    margin-top: 3px;
+}
+
+div.allAnimalAgesDiv, div.allAnimalWeightsDiv {
+    margin: 30px 0;
 }
 
 div.animalPictureAndCheckboxDiv {
@@ -65,9 +115,12 @@ div.animalPictureAndCheckboxDiv img {
 }
 
 div.animalPictureDiv {
+    display: flex;
+    justify-content: center;
     width: 50%;
     max-width: 50%;
     margin: 0 auto;
+    margin-bottom: 7px;
 }
 
 div.animalCheckboxDiv {
