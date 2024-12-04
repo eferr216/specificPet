@@ -17,7 +17,7 @@ import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 
 /**
- * A simple servlet to welecome the user
+ * A simple servlet to welcome the user
  */
 
 @WebServlet(

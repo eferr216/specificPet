@@ -15,7 +15,7 @@
                 <li><a href="logIn">Log In</a></li>
             </c:when>
             <c:otherwise>
-                <li><a href="#">My Requests</a></li>
+                <li><a href="#">Requests</a></li>
                 <li><a href="#">Bookmarks</a></li>
             </c:otherwise>
         </c:choose>
