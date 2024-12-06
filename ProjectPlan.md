@@ -34,7 +34,7 @@ For those using this as a model, continue adding weekly tasks by considering:
 - [ ] Create a test version of the database for unit testing
 - [ ] Create unit tests for the PetDao
 - [ ] Create a class for the DB connection business
-- [ ] Create JSP for finding trails
+- [ ] Create JSP for finding pets
 - [ ] Create JSP for trail results
 - [ ] Create controller to route to find-a-pet jsp
 - [ ] Create controller to manage the work of finding a pet
