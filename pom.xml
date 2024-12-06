@@ -9,24 +9,23 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <maven.compiler.release>11</maven.compiler.release>
+    <commons-io.version>2.11.0</commons-io.version>
+    <hibernate-c3p0.version>6.4.3.Final</hibernate-c3p0.version>
+    <jackson-version>2.10.0</jackson-version>
+    <java-jwt.version>3.4.1</java-jwt.version>
+    <javax.version>7.0</javax.version>
+    <jersey-version>2.29.1</jersey-version>
+    <json.version>20170516</json.version>
+    <jstl-version>1.2</jstl-version>
     <junit.version>4.12</junit.version>
     <junit-vintage-version>4.12.0</junit-vintage-version>
-    <javax.version>7.0</javax.version>
-    <jstl-version>1.2</jstl-version>
-    <log4j-version>2.17.1</log4j-version>
-    <jupiter-version>5.0.0</jupiter-version>
     <junit-platform-runner-version>1.0.0</junit-platform-runner-version>
+    <jupiter-version>5.0.0</jupiter-version>
+    <log4j-version>2.17.1</log4j-version>
+    <lombok-version>1.18.10</lombok-version>
     <maven.compiler.release>11</maven.compiler.release>
     <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
     <maven-surefire-plugin-version>2.19</maven-surefire-plugin-version>
-    <lombok-version>1.18.10</lombok-version>
-    <jersey-version>2.29.1</jersey-version>
-    <jackson-version>2.10.0</jackson-version>
-    <java-jwt.version>3.4.1</java-jwt.version>
-    <json.version>20170516</json.version>
-    <commons-io.version>2.11.0</commons-io.version>
-    <hibernate-c3p0.version>6.4.3.Final</hibernate-c3p0.version>
     <mysql-version>8.0.17</mysql-version>
   </properties>
 

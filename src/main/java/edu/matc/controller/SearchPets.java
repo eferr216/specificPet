@@ -25,8 +25,16 @@ public class SearchPets extends HttpServlet {
     private final Logger logger = LogManager.getLogger(this.getClass());
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        GenericDao petGenericDao = new GenericDao(Pet.class);
+        String clickedLink = req.getParameter("link");
+
         if (req.getParameter("dogCheckbox") != null) {
             logger.error("Fake error!");
+        }
+        else if (clickedLink.equals("requests")) {
+            req.setAttribute("pets", petGenericDao.getAll());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/requests.jsp");
+            dispatcher.forward(req, res);
         }
     }
 
