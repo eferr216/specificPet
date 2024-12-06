@@ -1,5 +1,7 @@
 package edu.matc.controller;
 
+import edu.matc.entity.Pet;
+import edu.matc.persistence.GenericDao;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +23,7 @@ import javax.ws.rs.core.MediaType;
  */
 
 @WebServlet(
-        urlPatterns = {"/searchForPets"}
+        urlPatterns = {"/searchPets"}
 )
 public class SearchPets extends HttpServlet {
     private final Logger logger = LogManager.getLogger(this.getClass());
@@ -34,6 +36,28 @@ public class SearchPets extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        //
+        GenericDao petGenericDao = new GenericDao(Pet.class);
+
+        logger.error("submit request button not being pressed yet...");
+
+        if (req.getParameter("insertPetRequestButton") != null) {
+            int petAge = Integer.parseInt(req.getParameter("petAge"));
+            String petSpecies = req.getParameter("petSpecies");
+            String petColor = req.getParameter("petColor");
+            int petWeight = Integer.parseInt(req.getParameter("petWeight"));
+
+            Pet newPet = new Pet();
+
+            newPet.setPetAge(petAge);
+            newPet.setPetSpecies(petSpecies);
+            newPet.setPetColor(petColor);
+            newPet.setPetWeight(petWeight);
+
+            petGenericDao.insert(newPet);
+
+            req.setAttribute("pets", petGenericDao.getAll());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/requests.jsp");
+            dispatcher.forward(req, res);
+        }
     }
 }

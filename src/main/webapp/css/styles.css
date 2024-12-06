@@ -9,7 +9,7 @@ body {
     max-width: 100%;
 }
 
-body#homepage::before {
+body#homepage::before, body#requestspage::before {
     content: "";
     position: absolute;
     top: 0;
@@ -24,13 +24,13 @@ body#homepage::before {
     z-index: -1; /* Make sure the background is behind the content */
 }
 
-body#homepage h1 {
+body#homepage h1, body#requestspage h1 {
     margin-bottom: 35px;
     font-size: 30px;
     font-family: "Book Antiqua";
 }
 
-body#homepage form {
+body#homepage form, body#requestspage form {
     width: 80%;
     max-width: 80%;
     border-radius: 9px;
@@ -41,7 +41,7 @@ body#homepage form {
     box-shadow: 2px 2px 3px grey;
 }
 
-body#homepage div.homepageFormDiv {
+body#homepage div.homepageFormDiv, body#requestspage div.homepageFormDiv {
     width: 100%;
     max-width: 100%;
 }
@@ -72,8 +72,12 @@ nav ul li a:hover {
     color: blue;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
 }
 
 input[type='checkbox'] {
@@ -97,11 +101,11 @@ div.allAnimalTypesDiv {
     margin: 30px 0;
 }
 
-div#ageInputs, div#weightInputs {
+div#ageInputs, div#Fnputs_2, div#weightInputs, div#weightInputs_2 {
     margin-top: 3px;
 }
 
-div.allAnimalAgesDiv, div.allAnimalWeightsDiv {
+div.allAnimalAgesDiv, div.allAnimalWeightsDiv, div.allAnimalColorsDiv {
     margin: 30px 0;
 }
 
