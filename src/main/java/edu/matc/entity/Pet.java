@@ -2,6 +2,7 @@ package edu.matc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
+import java.util.Objects;
 
 /**
  * A class to represent a pet.
@@ -9,6 +10,7 @@ import jakarta.persistence.*;
 @Table(name="pet")
 @Entity(name="Pet")
 public class Pet {
+
     @Column(name = "pet_age")
     private int petAge;
 
@@ -36,11 +38,11 @@ public class Pet {
     /**
      * Instantiates a new Pet.
      *
-     * @param id
-     * @param petAge
-     * @param petSpecies
-     * @param petColor
-     * @param petWeight
+     * @param id the id
+     * @param petAge the age
+     * @param petSpecies the species
+     * @param petColor the color
+     * @param petWeight the weight
      */
     public Pet(int id, int petAge, String petSpecies, String petColor, int petWeight) {
 
@@ -53,7 +55,7 @@ public class Pet {
 
     /**
      * The setter method for the id instance variable.
-     * @param id
+     * @param id the id
      */
     public void setId(int id) {
         this.id = id;
@@ -69,7 +71,7 @@ public class Pet {
 
     /**
      * This method sets the pet's age.
-     * @param petAge
+     * @param petAge the age
      */
     public void setPetAge(int petAge) {
         this.petAge = petAge;
@@ -144,5 +146,26 @@ public class Pet {
                 "', petColor='" + petColor + "}'";
     }
 
+    /**
+     * This method compares two objects for equality.
+     * @param o an Object
+     * @return a boolean indicating whether both objects are equal.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pet)) return false;
+        Pet pet = (Pet) o;
+        return petAge == pet.petAge && petWeight == pet.petWeight && id == pet.id && Objects.equals(petSpecies, pet.petSpecies) && Objects.equals(petColor, pet.petColor);
+    }
+
+    /**
+     * The hashCode method.
+     * @return a hashcode
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(petAge, petWeight, petSpecies, petColor, id);
+    }
 }
 

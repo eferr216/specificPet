@@ -12,7 +12,7 @@
 <h2>If so, fill out the form below!</h2>
 
 <div class="homepageFormDiv">
-    <form action="searchPets" method="get">
+    <form action="searchPets" method="post">
         <div class="allAnimalTypesDiv">
             <div class="animalPictureAndCheckboxDiv">
                 <div class="animalPictureDiv">
