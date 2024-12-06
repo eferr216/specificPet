@@ -313,3 +313,31 @@
 [DEBUG] 2024-12-06 03:33:32.146 [http-nio-8080-exec-10] Auth - Id token: eyJraWQiOiJNNzNSUTNEXC9aQzI3cTBUOE1jZHk4NzNmUFdDUDQ4R3Y0YzhSd3NvcUowRT0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiZFJDcGstNWZWQndKdXFMMmhSeGZ5dyIsInN1YiI6IjgxZmI5NTAwLTUwNTEtNzA4NC00OWI0LTYzMTA5MWExOTViMCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0yLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMl9sbVRha2RROEgiLCJjb2duaXRvOnVzZXJuYW1lIjoiZWZlcnJlaXJhIiwiZ2l2ZW5fbmFtZSI6IkVucmlxdWUiLCJvcmlnaW5fanRpIjoiNDg1NWFlN2MtNWFmYy00ZDczLTg3M2YtMzM0NmVhNDU4ODExIiwiYXVkIjoiNDdmbjAxcmU1a2dsc243a3MwdHFmMmc5ajIiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTczMzQ3NzYwOSwibmFtZSI6IkVucmlxdWUgRmVycmVpcmEiLCJleHAiOjE3MzM0ODEyMDksImlhdCI6MTczMzQ3NzYwOSwiZmFtaWx5X25hbWUiOiJGZXJyZWlyYSIsImp0aSI6IjVhYjQyNzA2LWMwOGYtNDJjYy05YzMxLWMzMmM4N2I2NzI5OSIsImVtYWlsIjoiZWZlcnJlaXJhQG1hZGlzb25jb2xsZWdlLmVkdSJ9.wUfOw_G7q5L8eMQDP7RH1rv8Q4CsR5C3Ill2JV1s5NTQFFaIxkH0OcKZKbEjtO7KE-uO84lQjHvcVDlYghlogHiXbkehYQMrqHOPy2oLGXRA_08KgSsI3nDiCq5PaY0pH25ZuX9XPs_mWqeO0cmAsdr5iqbfXcNnI8tHXykuTXwD9_OP6_IYx4bkIqgOMupSLYq9wRt7uJXnjLOvPvSkpZ0ff-LVeKU_OiUREuHPYOA-xDa6AkZFCAKxmnio2ExIFyieFXf1o_s7xhyRT9J9of0FbUiKiBiW4ctUDFWd7BhMrN96TigPysXj5gl8lXh6mNRZuP4dotjBkPRbXDizlw
 [DEBUG] 2024-12-06 03:33:32.234 [http-nio-8080-exec-10] Auth - here's the username: eferreira
 [DEBUG] 2024-12-06 03:33:32.234 [http-nio-8080-exec-10] Auth - here are all the available claims: {at_hash=com.auth0.jwt.impl.JsonNodeClaim@1eeaab09, sub=com.auth0.jwt.impl.JsonNodeClaim@66560d0f, email_verified=com.auth0.jwt.impl.JsonNodeClaim@7a21ca5, iss=com.auth0.jwt.impl.JsonNodeClaim@e3e3b23, cognito:username=com.auth0.jwt.impl.JsonNodeClaim@45c77b0e, given_name=com.auth0.jwt.impl.JsonNodeClaim@132f28cc, origin_jti=com.auth0.jwt.impl.JsonNodeClaim@4ff5938, aud=com.auth0.jwt.impl.JsonNodeClaim@7b678da7, token_use=com.auth0.jwt.impl.JsonNodeClaim@58686ce, auth_time=com.auth0.jwt.impl.JsonNodeClaim@6f85a7fa, name=com.auth0.jwt.impl.JsonNodeClaim@11cd05ab, exp=com.auth0.jwt.impl.JsonNodeClaim@5600b880, iat=com.auth0.jwt.impl.JsonNodeClaim@6781e478, family_name=com.auth0.jwt.impl.JsonNodeClaim@25793505, jti=com.auth0.jwt.impl.JsonNodeClaim@5ce09c5c, email=com.auth0.jwt.impl.JsonNodeClaim@ff7fbf8}
+[ERROR] 2024-12-06 04:35:28.803 [http-nio-8080-exec-6] Login - Error loading propertiesinStream parameter is null
+java.lang.NullPointerException: inStream parameter is null
+	at java.util.Objects.requireNonNull(Objects.java:248) ~[?:?]
+	at java.util.Properties.load(Properties.java:406) ~[?:?]
+	at edu.matc.util.PropertiesLoader.loadProperties(PropertiesLoader.java:27) ~[classes/:?]
+	at edu.matc.controller.Login.loadProperties(Login.java:42) [classes/:?]
+	at edu.matc.controller.Login.init(Login.java:32) [classes/:?]
+	at javax.servlet.GenericServlet.init(GenericServlet.java:143) [servlet-api.jar:3.1.FR]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:1109) [catalina.jar:8.5.98]
+	at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1061) [catalina.jar:8.5.98]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:745) [catalina.jar:8.5.98]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:116) [catalina.jar:8.5.98]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [catalina.jar:8.5.98]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) [catalina.jar:8.5.98]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [catalina.jar:8.5.98]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [catalina.jar:8.5.98]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:679) [catalina.jar:8.5.98]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [catalina.jar:8.5.98]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [catalina.jar:8.5.98]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:617) [tomcat-coyote.jar:8.5.98]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote.jar:8.5.98]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:934) [tomcat-coyote.jar:8.5.98]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1698) [tomcat-coyote.jar:8.5.98]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) [tomcat-coyote.jar:8.5.98]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util.jar:8.5.98]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util.jar:8.5.98]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util.jar:8.5.98]
+	at java.lang.Thread.run(Thread.java:829) [?:?]
