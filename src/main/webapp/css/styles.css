@@ -9,7 +9,15 @@ body {
     max-width: 100%;
 }
 
-body#homepage::before, body#viewrequestspage, body#requestspage::before {
+ .material-symbols-outlined {
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 24
+ }
+
+body#homepage::before, body#viewrequestspage::before, body#requestspage::before {
     content: "";
     position: absolute;
     top: 0;
@@ -28,6 +36,74 @@ body#homepage h1, body#viewrequestspage h1, body#requestspage h1 {
     margin-bottom: 35px;
     font-size: 30px;
     font-family: "Book Antiqua";
+}
+
+div.addNewPetRequestDiv {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.addNewPetRequestDiv a {
+    color: black;
+    margin-right: 5px;
+}
+
+div.addNewPetRequestDiv a:hover {
+    color: blue;
+}
+
+div.allRequestsDiv {
+    width: 100%;
+    max-width: 100%;
+}
+
+div.requestDiv {
+    width: 50%;
+    max-width: 50%;
+    height: 210px;
+    margin: 30px auto;
+    border: 1px solid grey;
+    border-radius: 9px;
+    background-color: rgba(135, 206, 250, .05);
+}
+
+div.editAndDeleteSection {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+div.editAndDeleteSection div {
+    text-decoration: none;
+    padding: 12px;
+}
+
+div.editAndDeleteSection div a {
+    color: black;
+}
+
+div.editAndDeleteSection div a:hover {
+    color: blue;
+}
+
+div.aboutPetSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.aboutPetSection ul {
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+div.aboutPetSection ul li {
+    margin: 5px 0;
 }
 
 body#homepage form, body#requestspage form {
