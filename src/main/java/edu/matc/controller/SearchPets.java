@@ -31,9 +31,9 @@ public class SearchPets extends HttpServlet {
         if (req.getParameter("dogCheckbox") != null) {
             logger.error("Fake error!");
         }
-        else if (clickedLink.equals("requests")) {
-            req.setAttribute("pets", petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/requests.jsp");
+        else if (clickedLink.equals("petRequests")) {
+            req.setAttribute("petRequests", petGenericDao.getAll());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
         }
     }

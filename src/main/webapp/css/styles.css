@@ -9,7 +9,7 @@ body {
     max-width: 100%;
 }
 
-body#homepage::before, body#requestspage::before {
+body#homepage::before, body#viewrequestspage, body#requestspage::before {
     content: "";
     position: absolute;
     top: 0;
@@ -24,7 +24,7 @@ body#homepage::before, body#requestspage::before {
     z-index: -1; /* Make sure the background is behind the content */
 }
 
-body#homepage h1, body#requestspage h1 {
+body#homepage h1, body#viewrequestspage h1, body#requestspage h1 {
     margin-bottom: 35px;
     font-size: 30px;
     font-family: "Book Antiqua";
