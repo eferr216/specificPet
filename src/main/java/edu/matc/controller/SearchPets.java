@@ -67,7 +67,7 @@ public class SearchPets extends HttpServlet {
             petGenericDao.insert(newPet);*/
 
             req.setAttribute("pets", petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/requests.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/makerequest.jsp");
             dispatcher.forward(req, res);
         }
     }

@@ -2,7 +2,10 @@ package edu.matc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A class to represent a pet.
@@ -28,6 +31,9 @@ public class Pet {
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "pet_id")
     private int id;
+
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<AdditionalDetails> additionalDetailsSet = new HashSet<>();
 
     /**
      * Instantiates a new Pet.
@@ -131,6 +137,48 @@ public class Pet {
      */
     public String getPetColor() {
         return petColor;
+    }
+
+    /**
+     * Gets a pet's additonal details.
+     * @return additonal details
+     */
+    public Set<AdditionalDetails> getAdditionalDetailsSet() {
+        return additionalDetailsSet;
+    }
+
+    /**
+     * Sets the additionalDetailsSet.
+     * @param additionalDetailsSet additional details Set
+     */
+    public void setAdditionalDetailsSet(Set<AdditionalDetails> additionalDetailsSet) {
+        this.additionalDetailsSet = additionalDetailsSet;
+    }
+
+    /**
+     * Adds an additional details to the additonalDetails Set.
+     * @param additionalDetails
+     */
+    public void addAdditionalDetails(AdditionalDetails additionalDetails) {
+        additionalDetailsSet.add(additionalDetails);
+        additionalDetails.setPet(this);
+    }
+
+    /**
+     * Sets the additional details of a Pet.
+     * @param additionalDetails
+     */
+    public void setAdditionalDetails(AdditionalDetails additionalDetails) {
+        additionalDetails.setPet(this);
+    }
+
+    /**
+     * Remove additional details.
+     * @param additionalDetails an item note
+     */
+    public void removeAdditionalDetails(AdditionalDetails additionalDetails) {
+        additionalDetailsSet.remove(additionalDetails);
+        additionalDetails.setPet(null);
     }
 
     /**

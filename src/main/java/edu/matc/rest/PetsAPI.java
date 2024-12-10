@@ -41,7 +41,7 @@ public class PetsAPI {
     }
 
     @GET
-    // The Java method will produce content identified by the MIME Media type "text/html"
+    // The Java method will produce content identified by the MIME Media type "application.json"
     @Path("/{id}")
     @Produces("application/json")
     public Response getMessageWithCoordinateParams(@PathParam("id") int x) {

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body id="requestspage">
+<body id="makerequestpage">
 <jsp:include page="navigation.jsp" />
 <h1>Would you like to be notified when a pet with specific traits becomes available?</h1>
 <h2>If so, fill out the form below!</h2>
