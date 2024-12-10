@@ -46,6 +46,7 @@
                     </ul>
                 </div>
             </div>
+            <div class="additionalDetailsLinkDiv"><a href="searchPets?link=viewAdditionalDetails&petRequestId=${petRequest.id}">View Additional Details</a></div>
         </div>
     </c:forEach>
 </div>
