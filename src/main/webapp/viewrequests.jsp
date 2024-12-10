@@ -18,8 +18,8 @@
     <c:forEach items="${petRequests}" var="petRequest">
         <div class="requestDiv">
             <div class="editAndDeleteSection">
-                <!--<div><a href="deleteRequest.jsp?requestId=${petRequest.id}"><span class="material-symbols-outlined">delete</span></a></div>
-                <div><a href="editRequest.jsp?requestId=${petRequest.id}"><span class="material-symbols-outlined">edit</span></a></div>-->
+                <!--<div><a href="deleteRequest.jsp?requestId="><span class="material-symbols-outlined">delete</span></a></div>
+                <div><a href="editRequest.jsp?requestId="><span class="material-symbols-outlined">edit</span></a></div>-->
 
                 <form action="searchPets?selectedPetId=${petRequest.id}" method="post">
                     <input type="submit" name="deleteRequest" value="Delete" class="deleteSubmitButton">

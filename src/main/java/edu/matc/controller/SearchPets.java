@@ -135,10 +135,37 @@ public class SearchPets extends HttpServlet {
 
             List<Pet> petRequests = petGenericDao.getAll();
 
-            //req.setAttribute("selectedPet", selectedPet);
             req.setAttribute("petRequests", petRequests);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
         }
+        else if (req.getParameter("editRequest") != null) {
+            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
+            Pet petToEdit = (Pet) petGenericDao.getById(selectedPetId);
+            req.setAttribute("petToEdit", petToEdit);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/editrequest.jsp");
+            dispatcher.forward(req, res);
+        }
+        else if (req.getParameter("confirmEditRequestButton") != null) {
+            int idToEdit = Integer.parseInt(req.getParameter("idToEdit"));
+            String newPetColor = req.getParameter("petColor");
+            int newMaxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
+            int newMaxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
+
+            Pet petToUpdate = (Pet) petGenericDao.getById(idToEdit);
+
+            petToUpdate.setPetColor(newPetColor);
+            petToUpdate.setPetAge(newMaxAnimalAge);
+            petToUpdate.setPetWeight(newMaxAnimalWeight);
+
+            petGenericDao.update(petToUpdate);
+
+            logger.info(petToUpdate);
+
+            req.setAttribute("petRequests", petGenericDao.getAll());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            dispatcher.forward(req, res);
+        }
+
     }
 }
