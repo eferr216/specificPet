@@ -58,6 +58,7 @@ public class SearchPets extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         GenericDao petGenericDao = new GenericDao(Pet.class);
+        GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
 
         if (req.getParameter("insertPetRequestButton") != null) {
 
@@ -87,23 +88,43 @@ public class SearchPets extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/makerequest.jsp");
             dispatcher.forward(req, res);
         }
-        /*else if (req.getParameter("confirmDeleteDetails") != null) {
+        else if (req.getParameter("insertAdditonalDetailsButton") != null) {
             int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
             Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
 
-            int idToDelete = Integer.parseInt(req.getParameter("item_note_id"));
+            logger.info(selectedPetId);
 
-            selectedItem.removeItemNote((ItemNote) itemNoteGenericDao.getById(idToDelete));
+            String additionalDetailsText = req.getParameter("additionalDetailsText");
 
-            itemNoteGenericDao.delete(itemNoteGenericDao.getById(idToDelete));
+            AdditionalDetails newAdditionalDetails = new AdditionalDetails(additionalDetailsText, selectedPet);
+            selectedPet.addAdditionalDetails(newAdditionalDetails);
 
-            Set<ItemNote> itemNotesList = selectedItem.getItemNotes();
+            additionalDetailsDao.insert(newAdditionalDetails);
 
-            req.setAttribute("selectedItem", selectedItem);
-            req.setAttribute("itemNotes", itemNotesList);
+            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
 
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/itemNotes.jsp");
+            req.setAttribute("selectedPet", selectedPet);
+            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
-        }*/
+        }
+        else if (req.getParameter("deleteDetails") != null) {
+            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
+            Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+
+            int idToDelete = Integer.parseInt(req.getParameter("detailsId"));
+
+            selectedPet.removeAdditionalDetails((AdditionalDetails) additionalDetailsDao.getById(idToDelete));
+
+            additionalDetailsDao.delete(additionalDetailsDao.getById(idToDelete));
+
+            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
+
+            req.setAttribute("selectedPet", selectedPet);
+            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
+            dispatcher.forward(req, res);
+        }
     }
 }
