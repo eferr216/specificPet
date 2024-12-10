@@ -44,15 +44,14 @@ public class Pet {
     /**
      * Instantiates a new Pet.
      *
-     * @param id the id
      * @param petAge the age
      * @param petSpecies the species
      * @param petColor the color
      * @param petWeight the weight
      */
-    public Pet(int id, int petAge, String petSpecies, String petColor, int petWeight) {
+    public Pet(int petAge, String petSpecies, String petColor, int petWeight) {
 
-        this.id = id;
+        //this.id = id;
         this.petAge = petAge;
         this.petSpecies = petSpecies;
         this.petColor = petColor;

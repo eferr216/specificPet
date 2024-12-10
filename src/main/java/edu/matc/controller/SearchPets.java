@@ -54,6 +54,20 @@ public class SearchPets extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
+        else if (clickedLink.equals("addNewAdditionalDetails")) {
+            int petRequestId = Integer.parseInt(req.getParameter("selectedPetId"));
+
+            Pet selectedPet = (Pet) petGenericDao.getById(petRequestId);
+
+            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
+
+            req.setAttribute("selectedPet", selectedPet);
+            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
+
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/addadditionaldetails.jsp");
+            dispatcher.forward(req, res);
+        }
     }
 
     @Override
@@ -62,38 +76,36 @@ public class SearchPets extends HttpServlet {
         GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
 
         if (req.getParameter("insertPetRequestButton") != null) {
+            String petSpecies = "";
 
-            logger.error("submit request button being pressed...");
-
-            /*int petAge = 0;
-            int petWeight = 0;
-            if (req.getParameter("minAnimalAge") != null) {
-                petAge = Integer.parseInt(req.getParameter("petAge"));
+            if (req.getParameter("dogCheckbox") != null | req.getParameter("dogCheckbox").equals("dog")) {
+                petSpecies = req.getParameter("dogCheckbox");
             }
-            String petSpecies = req.getParameter("petSpecies");
+            if (req.getParameter("catCheckbox") != null | req.getParameter("catCheckbox").equals("cat")) {
+                petSpecies = req.getParameter("catCheckbox");
+            }
+            if (req.getParameter("turtleCheckbox") != null | req.getParameter("turtleCheckbox").equals("turtle")) {
+                petSpecies = req.getParameter("turtleCheckbox");
+            }
+            if (req.getParameter("birdCheckbox") != null | req.getParameter("birdCheckbox").equals("bird")) {
+                petSpecies = req.getParameter("birdCheckbox");
+            }
+
+            int maxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
+            int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
             String petColor = req.getParameter("petColor");
-            if (req.getParameter("minAnimalWeight") != null) {
-                petWeight = Integer.parseInt(req.getParameter("petWeight"));
-            }
 
-            Pet newPet = new Pet();
+            Pet newPet = new Pet(maxAnimalAge, petSpecies, petColor, maxAnimalWeight);
 
-            newPet.setPetAge(petAge);
-            newPet.setPetSpecies(petSpecies);
-            newPet.setPetColor(petColor);
-            newPet.setPetWeight(petWeight);
+            petGenericDao.insert(newPet);
 
-            petGenericDao.insert(newPet);*/
-
-            req.setAttribute("pets", petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/makerequest.jsp");
+            req.setAttribute("petRequests", petGenericDao.getAll());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertAdditonalDetailsButton") != null) {
             int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
             Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
-
-            logger.info(selectedPetId);
 
             String additionalDetailsText = req.getParameter("additionalDetailsText");
 

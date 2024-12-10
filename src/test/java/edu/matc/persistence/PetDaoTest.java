@@ -39,7 +39,7 @@ class PetDaoTest {
      */
     @Test
     void insertSuccess() {
-        Pet petToInsert = new Pet(11, 88, "Bird","Multi-color", 1906);
+        Pet petToInsert = new Pet(88, "Bird","Multi-color", 1906);
         int insertedPetId = petDao.insert(petToInsert);
         assertNotEquals(0, insertedPetId);
         Pet insertedPet = (Pet) petDao.getById(insertedPetId);

@@ -53,19 +53,15 @@
         </div>
         <hr>
         <div class="allAnimalAgesDiv">
-            <label for="ageInputs_2">Age</label>
+            <label for="ageInputs_2">Max Age</label>
             <div id="ageInputs_2">
-                <input type="number" min="0" max="100" id="minAnimalAge" name="minAnimalAge" placeholder="min">
-                -
                 <input type="number" min="0" max="100" id="maxAnimalAge" name="maxAnimalAge" placeholder="max">
             </div>
         </div>
         <hr>
         <div class="allAnimalWeightsDiv">
-            <label for="weightInputs_2">Weight</label>
+            <label for="weightInputs_2">Max Weight</label>
             <div id="weightInputs_2">
-                <input type="number" min="0" max="100" id="minAnimalWeight" name="minAnimalWeight" placeholder="min">
-                -
                 <input type="number" min="0" max="300" id="maxAnimalWeight" name="maxAnimalWeight" placeholder="max">
             </div>
         </div>

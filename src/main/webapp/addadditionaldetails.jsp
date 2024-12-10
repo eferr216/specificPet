@@ -10,7 +10,7 @@
 <jsp:include page="navigation.jsp" />
 <h1>Add additional details</h1>
 <div class="homepageFormDiv">
-    <form action="searchPets?selectedPetId=${selectedPetId}" method="post">
+    <form action="searchPets?selectedPetId=${selectedPet.id}" method="post">
         <label for="additionalDetailsTextInput">Details Text:</label>
         <input id="additionalDetailsTextInput" name="additionalDetailsText" type="text">
         <!--<input type="submit" name="insertAdditionalDetailsSubmitButton" value="Submit">-->
