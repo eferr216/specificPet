@@ -10,7 +10,6 @@
 <body id="viewrequestspage">
 <jsp:include page="navigation.jsp" />
 <h1>Get notified when a pet with specific traits becomes available.</h1>
-<h2>My Pet Requests</h2>
 <div class="addNewPetRequestDiv">
     <a href="makerequest.jsp"><span class="material-symbols-outlined">add_circle</span></a><span>-    Add new pet request</span>
 </div>
@@ -19,8 +18,13 @@
     <c:forEach items="${petRequests}" var="petRequest">
         <div class="requestDiv">
             <div class="editAndDeleteSection">
-                <div><a href="deleteRequest.jsp?requestId=${petRequest.id}"><span class="material-symbols-outlined">delete</span></a></div>
-                <div><a href="editRequest.jsp?requestId=${petRequest.id}"><span class="material-symbols-outlined">edit</span></a></div>
+                <!--<div><a href="deleteRequest.jsp?requestId=${petRequest.id}"><span class="material-symbols-outlined">delete</span></a></div>
+                <div><a href="editRequest.jsp?requestId=${petRequest.id}"><span class="material-symbols-outlined">edit</span></a></div>-->
+
+                <form action="searchPets?selectedPetId=${petRequest.id}" method="post">
+                    <input type="submit" name="deleteRequest" value="Delete" class="deleteSubmitButton">
+                    <input type="submit" name="editRequest" value="Edit">
+                </form>
             </div>
             <div class="aboutSectionContainer">
                 <div class="aboutPetImageSection">

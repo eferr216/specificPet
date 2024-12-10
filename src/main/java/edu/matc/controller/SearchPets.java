@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
 
@@ -124,6 +125,19 @@ public class SearchPets extends HttpServlet {
             req.setAttribute("additionalDetailsSet", additionalDetailsSet);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
+            dispatcher.forward(req, res);
+        }
+        else if (req.getParameter("deleteRequest") != null) {
+            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
+            Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+
+            petGenericDao.delete(selectedPet);
+
+            List<Pet> petRequests = petGenericDao.getAll();
+
+            //req.setAttribute("selectedPet", selectedPet);
+            req.setAttribute("petRequests", petRequests);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
         }
     }
