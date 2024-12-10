@@ -32,10 +32,7 @@ public class SearchPets extends HttpServlet {
         GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
         String clickedLink = req.getParameter("link");
 
-        if (req.getParameter("dogCheckbox") != null) {
-            logger.error("Fake error!");
-        }
-        else if (clickedLink.equals("petRequests")) {
+        if (clickedLink.equals("petRequests")) {
             req.setAttribute("petRequests", petGenericDao.getAll());
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
@@ -75,7 +72,33 @@ public class SearchPets extends HttpServlet {
         GenericDao petGenericDao = new GenericDao(Pet.class);
         GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
 
-        if (req.getParameter("insertPetRequestButton") != null) {
+        if (req.getParameter("searchForPetsButton") != null) {
+            String petSpecies = "";
+
+            if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
+                petSpecies += req.getParameter("dogCheckbox");
+            }
+            if (req.getParameter("catCheckbox") != null && req.getParameter("catCheckbox").equals("Cat")) {
+                petSpecies += req.getParameter("catCheckbox");
+            }
+            if (req.getParameter("turtleCheckbox") != null && req.getParameter("turtleCheckbox").equals("Turtle")) {
+                petSpecies += req.getParameter("turtleCheckbox");
+            }
+            if (req.getParameter("birdCheckbox") != null && req.getParameter("birdCheckbox").equals("Bird")) {
+                petSpecies += req.getParameter("birdCheckbox");
+            }
+
+            int maxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
+            String petColor = req.getParameter("petColor");
+            int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
+
+            /////////////////////////////////////
+
+            //req.setAttribute("petRequests", petGenericDao.getAll());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            dispatcher.forward(req, res);
+        }
+        else if (req.getParameter("insertPetRequestButton") != null) {
             String petSpecies = "";
 
             if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
