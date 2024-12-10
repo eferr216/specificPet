@@ -15,7 +15,7 @@
         <input id="additionalDetailsTextInput" name="additionalDetailsText" type="text">
         <!--<input type="submit" name="insertAdditionalDetailsSubmitButton" value="Submit">-->
         <div class="submitButtonDiv">
-            <input type="submit" name="insertAdditonalDetailsButton" value="Submit">
+            <input type="submit" name="insertAdditionalDetailsButton" value="Submit">
         </div>
     </form>
 </div>

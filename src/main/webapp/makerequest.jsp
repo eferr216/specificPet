@@ -19,7 +19,7 @@
                     <img id="dogImg_2" src="images/dog_1.png" alt="A dog.">
                 </div>
                 <div class="animalCheckboxDiv">
-                    <input type="checkbox" id="dogCheckbox_2" name="dogCheckbox" value="dog">
+                    <input type="checkbox" id="dogCheckbox_2" name="dogCheckbox" value="Dog">
                     <label for="dogCheckbox_2">Dog</label>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <img id="catImg_2" src="images/cat_1.png" alt="A cat.">
                 </div>
                 <div class="animalCheckboxDiv">
-                    <input type="checkbox" id="catCheckbox_2" name="catCheckbox" value="cat">
+                    <input type="checkbox" id="catCheckbox_2" name="catCheckbox" value="Cat">
                     <label for="catCheckbox_2">Cat</label>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <img id="turtleImg_2" src="images/turtle_1.png" alt="A turtle.">
                 </div>
                 <div class="animalCheckboxDiv">
-                    <input type="checkbox" id="turtleCheckbox_2" name="turtleCheckbox" value="turtle">
+                    <input type="checkbox" id="turtleCheckbox_2" name="turtleCheckbox" value="Turtle">
                     <label for="turtleCheckbox_2">Turtle</label>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <img id="birdImg_2" src="images/bird_1.png" alt="A bird.">
                 </div>
                 <div class="animalCheckboxDiv">
-                    <input type="checkbox" id="birdCheckbox_2" name="birdCheckbox" value="bird">
+                    <input type="checkbox" id="birdCheckbox_2" name="birdCheckbox" value="Bird">
                     <label for="birdCheckbox_2">Bird</label>
                 </div>
             </div>

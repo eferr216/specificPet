@@ -78,22 +78,22 @@ public class SearchPets extends HttpServlet {
         if (req.getParameter("insertPetRequestButton") != null) {
             String petSpecies = "";
 
-            if (req.getParameter("dogCheckbox") != null | req.getParameter("dogCheckbox").equals("dog")) {
-                petSpecies = req.getParameter("dogCheckbox");
+            if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
+                petSpecies += req.getParameter("dogCheckbox");
             }
-            if (req.getParameter("catCheckbox") != null | req.getParameter("catCheckbox").equals("cat")) {
-                petSpecies = req.getParameter("catCheckbox");
+            if (req.getParameter("catCheckbox") != null && req.getParameter("catCheckbox").equals("Cat")) {
+                petSpecies += req.getParameter("catCheckbox");
             }
-            if (req.getParameter("turtleCheckbox") != null | req.getParameter("turtleCheckbox").equals("turtle")) {
-                petSpecies = req.getParameter("turtleCheckbox");
+            if (req.getParameter("turtleCheckbox") != null && req.getParameter("turtleCheckbox").equals("Turtle")) {
+                petSpecies += req.getParameter("turtleCheckbox");
             }
-            if (req.getParameter("birdCheckbox") != null | req.getParameter("birdCheckbox").equals("bird")) {
-                petSpecies = req.getParameter("birdCheckbox");
+            if (req.getParameter("birdCheckbox") != null && req.getParameter("birdCheckbox").equals("Bird")) {
+                petSpecies += req.getParameter("birdCheckbox");
             }
 
             int maxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
-            int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
             String petColor = req.getParameter("petColor");
+            int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
 
             Pet newPet = new Pet(maxAnimalAge, petSpecies, petColor, maxAnimalWeight);
 
@@ -103,7 +103,7 @@ public class SearchPets extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
         }
-        else if (req.getParameter("insertAdditonalDetailsButton") != null) {
+        else if (req.getParameter("insertAdditionalDetailsButton") != null) {
             int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
             Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
 
