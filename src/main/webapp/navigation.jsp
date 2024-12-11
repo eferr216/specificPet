@@ -7,7 +7,7 @@
                 <li><a href="logIn">Log In</a></li>
             </c:when>
             <c:otherwise>
-                <li><a href="searchPets?link=petRequests">Requests</a></li>
+                <li><a href="searchPets?link=petRequests&userName=${userName}">Requests</a></li>
                 <!--<li><a href="#">Bookmarks</a></li>-->
             </c:otherwise>
         </c:choose>

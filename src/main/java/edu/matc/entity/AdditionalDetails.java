@@ -24,36 +24,65 @@ public class AdditionalDetails {
     private Pet pet;
 
     /**
-     * Instantiates new AdditionalDetails.
+     * Instantiates a new AdditionalDetails.
      */
     public AdditionalDetails() {
     }
 
+    /**
+     * Instantiates a new AdditionalDetails.
+     * @param detailsText the AdditionalDetails text
+     * @param pet the Pet associated with this AdditionalDetails.
+     */
     public AdditionalDetails(String detailsText, Pet pet) {
         this.pet = pet;
         this.detailsText = detailsText;
     }
 
+    /**
+     * This method gets the id of this AdditionalDetails.
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * This method sets the id of this AdditionalDetails.
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * This method gets the text for an AdditionalDetails.
+     * @return
+     */
     public String getDetailsText() {
         return detailsText;
     }
 
+    /**
+     * This method sets the text for an AdditionalDetails.
+     * @param detailsText the details text
+     */
     public void setDetailsText(String detailsText) {
         this.detailsText = detailsText;
     }
 
+    /**
+     * This method returns the pet that is associated with this AdditionalDetails.
+     * @return a Pet
+     */
     public Pet getPet() {
         return pet;
     }
 
+    /**
+     * This method sets the Pet that is associated with this AdditionalDetails
+     * @param pet a Pet
+     */
     public void setPet(Pet pet) {
         this.pet = pet;
     }

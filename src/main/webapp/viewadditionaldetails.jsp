@@ -52,7 +52,6 @@
                     <a href="editAdditionalDetails.jsp?detailsId="><span class="material-symbols-outlined">edit</span></a>-->
                     <form action="searchPets?selectedPetId=${selectedPet.id}&detailsId=${additionalDetails.id}" method="post">
                         <input type="submit" name="deleteDetails" value="Delete" class="deleteSubmitButton">
-                        <input type="submit" name="editDetails" value="Edit">
                     </form>
                 </span>
             </div>

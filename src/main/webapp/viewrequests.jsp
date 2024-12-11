@@ -11,7 +11,7 @@
 <jsp:include page="navigation.jsp" />
 <h1>Get notified when a pet with specific traits becomes available.</h1>
 <div class="addNewPetRequestDiv">
-    <a href="makerequest.jsp"><span class="material-symbols-outlined">add_circle</span></a><span>-    Add new pet request</span>
+    <a href="makerequest.jsp?userName=${userName}"><span class="material-symbols-outlined">add_circle</span></a><span>-    Add new pet request</span>
 </div>
 
 <div class="allRequestsDiv">

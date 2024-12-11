@@ -2,6 +2,7 @@ package edu.matc.controller;
 
 import edu.matc.entity.AdditionalDetails;
 import edu.matc.entity.Pet;
+import edu.matc.entity.User;
 import edu.matc.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * A simple servlet to welcome the user
+ * The servlet is responsible for performing all of the CRUD operations on our DB.
  */
 
 @WebServlet(
@@ -29,7 +30,6 @@ public class SearchPets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         GenericDao petGenericDao = new GenericDao(Pet.class);
-        GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
         String clickedLink = req.getParameter("link");
 
         if (clickedLink.equals("petRequests")) {
@@ -71,6 +71,7 @@ public class SearchPets extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         GenericDao petGenericDao = new GenericDao(Pet.class);
         GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
+        GenericDao userDao = new GenericDao(User.class);
 
         if (req.getParameter("searchForPetsButton") != null) {
             String petSpecies = "";
@@ -100,6 +101,8 @@ public class SearchPets extends HttpServlet {
         }
         else if (req.getParameter("insertPetRequestButton") != null) {
             String petSpecies = "";
+            HttpSession session = req.getSession();
+            User user = (User) session.getAttribute("user");
 
             if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
                 petSpecies += req.getParameter("dogCheckbox");

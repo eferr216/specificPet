@@ -1,6 +1,17 @@
 delete from additionaldetails;
 delete from pet;
 delete from user;
+INSERT INTO user VALUES (1,"Al"),
+                        (2,"Lisa"),
+                        (3,"George"),
+                        (4,"Carley"),
+                        (5,"Rondo"),
+                        (6,"Ashley"),
+                        (7,"Granger"),
+                        (8,"Coolio"),
+                        (9,"Tristan"),
+                        (10,"Jordan");
+
 INSERT INTO pet VALUES
                      (1,3,24,"Dog", "blue"),
                      (2,9,15,"Dog", "red"),
@@ -24,16 +35,6 @@ INSERT INTO AdditionalDetails VALUES (1,"I just hope the dog I get is energetic!
                                      (9,"My last dog ran away!", 4),
                                      (10,"I'll wait as long as it takes to get this kind of dog!!!", 4);
 
-INSERT INTO user (user_name) VALUES ("user1@example.com"),
-                                     ("user2@example.com"),
-                                     ("user3@example.com"),
-                                     ("user4@example.com"),
-                                     ("user5@example.com"),
-                                     ("user6@example.com"),
-                                     ("user7@example.com"),
-                                     ("user8@example.com"),
-                                     ("user9@example.com"),
-                                     ("user10@example.com");
 
 
 

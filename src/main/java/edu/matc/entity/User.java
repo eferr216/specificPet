@@ -22,9 +22,6 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    //private Set<Pet> petsSet = new HashSet<>();
-
     /**
      * Instantiates a new User.
      */
