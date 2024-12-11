@@ -12,8 +12,7 @@
 <div class="homepageFormDiv">
     <form action="searchPets?selectedPetId=${selectedPet.id}" method="post">
         <label for="additionalDetailsTextInput">Details Text:</label>
-        <input id="additionalDetailsTextInput" name="additionalDetailsText" type="text">
-        <!--<input type="submit" name="insertAdditionalDetailsSubmitButton" value="Submit">-->
+        <input id="additionalDetailsTextInput" name="additionalDetailsText" type="text" required>
         <div class="submitButtonDiv">
             <input type="submit" name="insertAdditionalDetailsButton" value="Submit">
         </div>

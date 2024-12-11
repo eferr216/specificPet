@@ -54,21 +54,21 @@
         <div class="allAnimalAgesDiv">
             <label for="ageInputs">Max Age</label>
             <div id="ageInputs">
-                <input type="number" min="0" max="100" id="maxAnimalAge" name="maxAnimalAge" placeholder="max">
+                <input type="number" min="0" max="100" id="maxAnimalAge" name="maxAnimalAge" placeholder="max" required>
             </div>
         </div>
         <hr>
         <div class="allAnimalWeightsDiv">
             <label for="weightInputs">Max Weight (lbs.)</label>
             <div id="weightInputs">
-                <input type="number" min="0" max="300" id="maxAnimalWeight" name="maxAnimalWeight" placeholder="max">
+                <input type="number" min="0" max="300" id="maxAnimalWeight" name="maxAnimalWeight" placeholder="max" required>
             </div>
         </div>
         <hr>
         <div class="allAnimalColorsDiv">
             <label for="colorInputs_2">Color</label>
             <div id="colorInputs_2">
-                <input type="text" id="petColor" name="petColor" placeholder="color">
+                <input type="text" id="petColor" name="petColor" placeholder="color" required>
             </div>
         </div>
         <hr>
