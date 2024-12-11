@@ -24,7 +24,7 @@ INSERT INTO AdditionalDetails VALUES (1,"I just hope the dog I get is energetic!
                                      (9,"My last dog ran away!", 4),
                                      (10,"I'll wait as long as it takes to get this kind of dog!!!", 4);
 
-INSERT INTO user (user_email) VALUES ("user1@example.com"),
+INSERT INTO user (user_name) VALUES ("user1@example.com"),
                                      ("user2@example.com"),
                                      ("user3@example.com"),
                                      ("user4@example.com"),

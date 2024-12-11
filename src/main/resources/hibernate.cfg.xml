@@ -12,5 +12,6 @@
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <mapping class="edu.matc.entity.Pet"/>
         <mapping class="edu.matc.entity.AdditionalDetails"/>
+        <mapping class="edu.matc.entity.User"/>
     </session-factory>
 </hibernate-configuration>

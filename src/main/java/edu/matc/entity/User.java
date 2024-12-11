@@ -13,8 +13,8 @@ import java.util.Set;
 @Table(name="user")
 @Entity(name="User")
 public class User {
-    @Column(name = "user_email")
-    private String userEmail;
+    @Column(name = "user_name")
+    private String userName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -34,10 +34,10 @@ public class User {
     /**
      * Instantiates a new User.
      *
-     * @param userEmail the user's email adress
+     * @param userName the userName
      */
-    public User(String userEmail) {
-        this.userEmail = userEmail;
+    public User(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -57,36 +57,20 @@ public class User {
     }
 
     /**
-     * This method sets the user's email address
-     * @param userEmail the user's email address
+     * This method sets the user's userName.
+     * @param userName the user's userName
      */
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
-     * This method gets the user's email address.
-     * @return the user's email address
+     * This method gets the user's userName.
+     * @return the userName
      */
-    public String getUserEmail() {
-        return userEmail;
+    public String getuserName() {
+        return userName;
     }
-
-    /**
-     * Gets a user's pet requests.
-     * @return pet requests
-     */
-    /*public Set<Pet> getPetsSet() {
-        return petsSet;
-    }*/
-
-    /**
-     * Sets the petsSet.
-     * @param petsSet pet requests Set
-     */
-    /*public void setPetsSet(Set<Pet> petsSet) {
-        this.petsSet = petsSet;
-    }*/
 
 }
 
