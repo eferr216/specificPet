@@ -49,6 +49,8 @@ public class TestServiceClient implements PropertiesLoader {
 
         //Pet pet = mapper.readValue(response, Pet.class);
 
+        //pet.getData().get()
+
         /*try {
             // Make the API request and add necessary headers
             String response = target
