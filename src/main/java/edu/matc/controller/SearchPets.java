@@ -34,6 +34,7 @@ public class SearchPets extends HttpServlet {
 
         if (clickedLink.equals("petRequests")) {
             req.setAttribute("petRequests", petGenericDao.getAll());
+            logger.info(petGenericDao.getAll());
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
             dispatcher.forward(req, res);
         }

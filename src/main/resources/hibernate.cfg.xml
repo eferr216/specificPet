@@ -2,8 +2,8 @@
     <session-factory>
         <property name="connection.url">jdbc:mysql://awseb-e-aqbz4ymep9-stack-awsebrdsdatabase-qqmcbgqwasmu.cru68oguusqk.us-east-2.rds.amazonaws.com:3306/specificpet</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">student</property>
+        <property name="connection.username">student</property>
+        <property name="connection.password">studentt</property>
         <property name="hibernate.c3p0.min_size">5</property>
         <property name="hibernate.c3p0.max_size">20</property>
         <property name="hibernate.c3p0.timeout">300</property>
