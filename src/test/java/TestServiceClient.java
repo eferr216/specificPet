@@ -13,8 +13,7 @@ public class TestServiceClient implements PropertiesLoader {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
-    String baseUrl;
-    String mainUrl;
+    String url;
     String apiKey;
     String contentType;
 
@@ -28,9 +27,8 @@ public class TestServiceClient implements PropertiesLoader {
             throw new RuntimeException(e);
         }
 
-        baseUrl = properties.getProperty("baseUrl");
-        mainUrl = properties.getProperty("mainUrl");
-        apiKey = properties.getProperty("apiKey");
+        //url = properties.getProperty("url");
+        //apiKey = properties.getProperty("apiKey");
         contentType = properties.getProperty("contentType");
     }
 
@@ -39,9 +37,9 @@ public class TestServiceClient implements PropertiesLoader {
 
         Client client = ClientBuilder.newClient();
         WebTarget target =
-                client.target(baseUrl + mainUrl);
+                client.target("https://api.rescuegroups.org/v5/public/animals/search/available/cats/haspic?fields[animals]=distance&include=breeds,colors,orgs,patterns,pictures,species&sort=animals.distance&limit=10");
 
-        //String response = target.request(MediaType.APPLICATION_JSON).header("Authorization", apiKey).header("Content-Type", "application/json").get(String.class);
+        //String response = target.request(MediaType.APPLICATION_JSON).header("Authorization", "sodXODzJ").header("Content-Type", "application/vnd.api+json").get(String.class);
 
         //JSONObject mainJsonObject = new JSONObject(response);
 
@@ -49,7 +47,7 @@ public class TestServiceClient implements PropertiesLoader {
 
         //Pet pet = mapper.readValue(response, Pet.class);
 
-        //pet.getData().get()
+        //pet.getData().get(1);
 
         /*try {
             // Make the API request and add necessary headers

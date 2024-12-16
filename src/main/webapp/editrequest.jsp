@@ -70,21 +70,21 @@
         <div class="allAnimalAgesDiv">
             <label for="ageInputs_2">Max Age</label>
             <div id="ageInputs_2">
-                <input type="number" min="0" max="100" id="maxAnimalAge" name="maxAnimalAge" placeholder=${petToEdit.petAge}>
+                <input type="number" min="0" max="100" id="maxAnimalAge" name="maxAnimalAge" value=${petToEdit.petAge}>
             </div>
         </div>
         <hr>
         <div class="allAnimalWeightsDiv">
             <label for="weightInputs_2">Max Weight (lbs.)</label>
             <div id="weightInputs_2">
-                <input type="number" min="0" max="300" id="maxAnimalWeight" name="maxAnimalWeight" placeholder=${petToEdit.petWeight}>
+                <input type="number" min="0" max="300" id="maxAnimalWeight" name="maxAnimalWeight" value=${petToEdit.petWeight}>
             </div>
         </div>
         <hr>
         <div class="allAnimalColorsDiv">
             <label for="colorInputs_2">Color</label>
             <div id="colorInputs_2">
-                <input type="text" id="petColor" name="petColor" placeholder=${petToEdit.petColor}>
+                <input type="text" id="petColor" name="petColor" value=${petToEdit.petColor}>
             </div>
         </div>
         <hr>
