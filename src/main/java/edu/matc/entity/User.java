@@ -57,7 +57,7 @@ public class User {
      * This method sets the user's userName.
      * @param userName the user's userName
      */
-    public void setUserName(String userName) {
+    public void setEmail(String userName) {
         this.userName = userName;
     }
 

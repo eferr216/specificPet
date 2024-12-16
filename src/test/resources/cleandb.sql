@@ -1,16 +1,16 @@
 delete from additionaldetails;
 delete from pet;
 delete from user;
-INSERT INTO user VALUES (1,"Al"),
-                        (2,"Lisa"),
-                        (3,"George"),
-                        (4,"Carley"),
-                        (5,"Rondo"),
-                        (6,"Ashley"),
-                        (7,"Granger"),
-                        (8,"Coolio"),
-                        (9,"Tristan"),
-                        (10,"Jordan");
+INSERT INTO user VALUES (1,"al@gmail.com"),
+                        (2,"lisa@gmail.com"),
+                        (3,"george@gmail.com"),
+                        (4,"carley@gmail.com"),
+                        (5,"rondo@gmail.com"),
+                        (6,"ashley@gmail.com"),
+                        (7,"granger@gmail.com"),
+                        (8,"coolio@gmail.com"),
+                        (9,"tristan@gmail.com"),
+                        (10,"jordan@gmail.com");
 
 INSERT INTO pet VALUES
                      (1,3,24,"Dog", "blue"),
