@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
 
@@ -94,10 +96,16 @@ public class SearchPets extends HttpServlet {
             String petColor = req.getParameter("petColor");
             int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
 
-            /////////////////////////////////////
+            Map<String, Object> criteria = new HashMap<>();
+            criteria.put("petAge", maxAnimalAge);
+            criteria.put("petSpecies", petSpecies);
+            criteria.put("petColor", petColor);
+            criteria.put("petWeight", maxAnimalWeight);
 
-            //req.setAttribute("petRequests", petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            List<User> pets = petGenericDao.getByPropertiesEqual(criteria);
+
+            req.setAttribute("petRequests", pets);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewresults.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertPetRequestButton") != null) {

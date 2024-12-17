@@ -116,7 +116,7 @@ public class GenericDao<T> {
      * @param value the value by which to find.
      * @return the list of all entities found matching the criteria
      */
-    public List<T> findByPropertyEqual(String propertyName, Object value) {
+    public List<T> getByPropertyEqual(String propertyName, Object value) {
         Session session = getSession();
         HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
@@ -127,26 +127,51 @@ public class GenericDao<T> {
         return items;
     }
 
-    /**
-     * Finds entities by multiple properties.
-     * Inspired by https://stackoverflow.com/questions/11138118/really-dynamic-jpa-criteriabuilder
-
-     * @param propertyMap property and value pairs
-     * @return entities with properties equal to those passed in the map
-     *
-     *
-     */
-    public List<T> findByPropertyEqual(Map<String, Object> propertyMap) {
+    public List<T> getByPropertiesEqual(Map<String, Object> criteria) {
         Session session = getSession();
         HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        for (Map.Entry entry: propertyMap.entrySet()) {
-            predicates.add(builder.equal(root.get((String) entry.getKey()), entry.getValue()));
+
+        // Create a list to store predicates
+        List<Predicate> predicates = new ArrayList<>();
+
+        // Iterate through the criteria map and build predicates for each property-value pair
+        for (Map.Entry<String, Object> entry : criteria.entrySet()) {
+            String propertyName = entry.getKey();
+            Object value = entry.getValue();
+
+            // Add a predicate for each property equal to its value
+            predicates.add(builder.equal(root.get(propertyName), value));
         }
-        query.select(root).where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
-        List<T> items = session.createSelectionQuery( query ).getResultList();
+
+        // Combine all the predicates using an AND clause
+        query.select(root).where(builder.and(predicates.toArray(new Predicate[0])));
+
+        List<T> items = session.createQuery(query).getResultList();
+        session.close();
+        return items;
+    }
+
+    /**
+     * Gets by property like (%)
+     * @param propertyName the property name
+     * @param value the value being searched for
+     * @return
+     */
+    public List<T> getByPropertyLike(String propertyName, String value) {
+        Session session = getSession();
+
+//        logger.debug("Searching for user with {} = {}",  propertyName, value);
+
+        HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        Expression<String> propertyPath = root.get(propertyName);
+
+        query.where(builder.like(propertyPath, "%" + value + "%"));
+
+        List<T> items = session.createQuery( query ).getResultList();
         session.close();
         return items;
     }

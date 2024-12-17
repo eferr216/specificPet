@@ -82,6 +82,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
         String userName = null;
+        String userEmail = null;
 
         if (authCode == null) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
@@ -90,7 +91,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
-                userName = validate(tokenResponse);
+                userName = validate(tokenResponse, req);
                 session = req.getSession();
                 session.setAttribute("userName", userName);
             } catch (IOException e) {
@@ -134,11 +135,13 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     /**
      * Get values out of the header to verify the token is legit. If it is legit, get the claims from it, such
      * as username.
+     *
      * @param tokenResponse
+     * @param req
      * @return
      * @throws IOException
      */
-    private String validate(TokenResponse tokenResponse) throws IOException {
+    private String validate(TokenResponse tokenResponse, HttpServletRequest req) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CognitoTokenHeader tokenHeader = mapper.readValue(CognitoJWTParser.getHeader(tokenResponse.getIdToken()).toString(), CognitoTokenHeader.class);
 
@@ -175,13 +178,16 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
-        String emailAddress = jwt.getClaim("cognito:email").asString();
-        logger.debug("here's the email address: " + emailAddress);
+        String userName = jwt.getClaim("cognito:username").asString();
+        String userEmail = jwt.getClaim("cognito:email").asString();
+        req.setAttribute("userEmail", userEmail);
+        logger.debug("here's the email address: " + userEmail);
+        logger.debug("here's the user name: " + userName);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
-        checkIfUserEmailAlreadyInDatabase(emailAddress);
+        //checkIfUserEmailAlreadyInDatabase(emailAddress);
 
-        return emailAddress;
+        return userName;
     }
 
     /** Create the auth url and use it to build the request.
@@ -265,15 +271,14 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      */
     private void checkIfUserEmailAlreadyInDatabase(String email) {
         GenericDao userDao = new GenericDao(User.class);
-        List<User> users = userDao.findByPropertyEqual("userEmail", email);
+        logger.info(email);
+        List<User> users = userDao.getByPropertyEqual("userEmail", email);
 
         User user;
         if (users.isEmpty()) {
-            // Create new user if they don't exist and set/get userID to be stored in session
             user = new User();
-            user.setEmail(email);
+            user.setUserEmail(email);
             int userId = userDao.insert(user);
-            user.setId(userId);
             logger.info("Created new user in mysql with email: " + email);
         } else {
             user = users.get(0);

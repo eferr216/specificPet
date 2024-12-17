@@ -91,7 +91,7 @@ public class AdditonalDetailsDaoTest {
      */
     @Test
     void findByPropertyEqualSuccess() {
-        List<AdditionalDetails> additionalDetailsList = additionalDetailsDao.findByPropertyEqual("detailsText", "I just hope the dog I get is energetic!");
+        List<AdditionalDetails> additionalDetailsList = additionalDetailsDao.getByPropertyEqual("detailsText", "I just hope the dog I get is energetic!");
         assertEquals(1, additionalDetailsList.size());
     }
 

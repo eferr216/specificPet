@@ -17,7 +17,7 @@ body {
              'opsz' 24
  }
 
-body#homepage::before, body#viewrequestspage::before, body#makerequestpage::before, body#viewadditionaldetailsspage::before, body#addadditionaldetailspage::before, body#editrequestpage::before {
+body#homepage::before, body#viewrequestspage::before, body#makerequestpage::before, body#viewadditionaldetailsspage::before, body#addadditionaldetailspage::before, body#editrequestpage::before, body#viewresultspage::before {
     content: "";
     position: absolute;
     top: 0;
@@ -32,7 +32,7 @@ body#homepage::before, body#viewrequestspage::before, body#makerequestpage::befo
     z-index: -1; /* Make sure the background is behind the content */
 }
 
-body#homepage h1, body#viewrequestspage h1, body#makerequestpage h1, body#viewadditionaldetailsspage h1, body#addadditionaldetailspage h1, body#editrequestpage h1 {
+body#homepage h1, body#viewrequestspage h1, body#makerequestpage h1, body#viewadditionaldetailsspage h1, body#addadditionaldetailspage h1, body#editrequestpage h1, body#viewresultspage h1 {
     margin-bottom: 35px;
     font-size: 30px;
     font-family: "Book Antiqua";

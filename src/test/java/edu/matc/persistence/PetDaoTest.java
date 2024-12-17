@@ -84,7 +84,7 @@ class PetDaoTest {
      */
     @Test
     void getByPropertyEqual() {
-        List<Pet> pets = petDao.findByPropertyEqual("petColor", "grey");
+        List<Pet> pets = petDao.getByPropertyEqual("petColor", "grey");
         assertEquals(1, pets.size());
         assertEquals(10, pets.get(0).getId());
     }
@@ -94,7 +94,7 @@ class PetDaoTest {
      */
     @Test
     void getByPropertyLike() {
-        List<Pet> pets = petDao.findByPropertyEqual("petSpecies", "bird");
+        List<Pet> pets = petDao.getByPropertyEqual("petSpecies", "bird");
         assertEquals(1, pets.size());
         assertEquals(9, pets.get(0).getId());
     }

@@ -2,19 +2,16 @@ package edu.matc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
-
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
- * A class to represent a pet.
+ * A class to represent a user.
  */
 @Table(name="user")
 @Entity(name="User")
 public class User {
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "user_email")
+    private String userEmail;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -31,10 +28,10 @@ public class User {
     /**
      * Instantiates a new User.
      *
-     * @param userName the userName
+     * @param userEmail the userEmail
      */
-    public User(String userName) {
-        this.userName = userName;
+    public User(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     /**
@@ -54,20 +51,40 @@ public class User {
     }
 
     /**
-     * This method sets the user's userName.
-     * @param userName the user's userName
+     * This method sets the user's userEmail.
+     * @param userEmail the user's userEmail
      */
-    public void setEmail(String userName) {
-        this.userName = userName;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     /**
-     * This method gets the user's userName.
-     * @return the userName
+     * This method gets the user's userEmail.
+     * @return the userEmail
      */
-    public String getuserName() {
-        return userName;
+    public String getUserEmail() {
+        return userEmail;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userEmail='" + userEmail + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(userEmail, user.userEmail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userEmail, id);
+    }
 }
 
