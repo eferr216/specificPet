@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.*;
 
+import javax.jms.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -82,7 +83,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
         String userName = null;
-        String userEmail = null;
+        //String userEmail = null;
 
         if (authCode == null) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
@@ -91,8 +92,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
-                userName = validate(tokenResponse, req);
                 session = req.getSession();
+                userName = validate(tokenResponse, req);
                 session.setAttribute("userName", userName);
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
@@ -102,6 +103,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 //TODO forward to an error page
             }
         }
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
         dispatcher.forward(req, resp);
 
@@ -137,7 +139,6 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * as username.
      *
      * @param tokenResponse
-     * @param req
      * @return
      * @throws IOException
      */
@@ -179,13 +180,15 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
-        String userEmail = jwt.getClaim("cognito:email").asString();
-        req.setAttribute("userEmail", userEmail);
-        logger.debug("here's the email address: " + userEmail);
+
+        //req.setAttribute("userName", userName);
+
+        //logger.debug("here's the email address: " + userEmail);
+
         logger.debug("here's the user name: " + userName);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
-        //checkIfUserEmailAlreadyInDatabase(emailAddress);
+        managePotentialNewUser(userName, req);
 
         return userName;
     }
@@ -266,24 +269,30 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     }
 
     /**
-     * This method checks whether or not the email that is passed in is already present in the User table.
-     * @param email user's email address
+     * This method checks whether or not the userName that is passed in is already present in the User table.
+     *
+     * @param userName user's userName
      */
-    private void checkIfUserEmailAlreadyInDatabase(String email) {
+    private void managePotentialNewUser(String userName, HttpServletRequest req) {
         GenericDao userDao = new GenericDao(User.class);
-        logger.info(email);
-        List<User> users = userDao.getByPropertyEqual("userEmail", email);
-
         User user;
+        List<User> users = userDao.getByPropertyEqual("userName", userName);
+
+        int userId = 0;
+
         if (users.isEmpty()) {
             user = new User();
-            user.setUserEmail(email);
-            int userId = userDao.insert(user);
-            logger.info("Created new user in mysql with email: " + email);
+            user.setUserName(userName);
+            userId = userDao.insert(user);
+            logger.info("Created new user in mysql with username: " + userName);
         } else {
             user = users.get(0);
-            logger.info("User already exists in mysql with email: " + email);
+            userId = user.getId();
+            logger.info("User already exists in mysql with username: " + userName);
         }
+
+        HttpSession session = req.getSession();
+        session.setAttribute("userId", user.getId());
 
     }
 

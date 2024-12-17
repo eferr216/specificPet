@@ -1,6 +1,7 @@
 package edu.matc.persistence;
 
 import edu.matc.entity.Pet;
+import edu.matc.entity.User;
 import edu.matc.test.util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ class PetDaoTest {
      * The Dao.
      */
     GenericDao petDao;
+    GenericDao userDao;
 
     /**
      * Sets up the book table with fresh data, and instantiates the bookdao.
@@ -22,6 +24,7 @@ class PetDaoTest {
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
         petDao = new GenericDao<>(Pet.class);
+        userDao = new GenericDao<>(User.class);
     }
 
     /**
@@ -39,7 +42,8 @@ class PetDaoTest {
      */
     @Test
     void insertSuccess() {
-        Pet petToInsert = new Pet(88, "Bird","Multi-color", 1906);
+        User user = (User) userDao.getById(3);
+        Pet petToInsert = new Pet(88, "Bird","Multi-color", 1906, user);
         int insertedPetId = petDao.insert(petToInsert);
         assertNotEquals(0, insertedPetId);
         Pet insertedPet = (Pet) petDao.getById(insertedPetId);

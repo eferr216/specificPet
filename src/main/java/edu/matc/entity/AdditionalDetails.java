@@ -35,8 +35,8 @@ public class AdditionalDetails {
      * @param pet the Pet associated with this AdditionalDetails.
      */
     public AdditionalDetails(String detailsText, Pet pet) {
-        this.pet = pet;
         this.detailsText = detailsText;
+        this.pet = pet;
     }
 
     /**

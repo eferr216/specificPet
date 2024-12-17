@@ -2,7 +2,10 @@ package edu.matc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A class to represent a user.
@@ -10,14 +13,17 @@ import java.util.Objects;
 @Table(name="user")
 @Entity(name="User")
 public class User {
-    @Column(name = "user_email")
-    private String userEmail;
+    @Column(name = "user_name")
+    private String userName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "user_id")
     private int id;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Pet> petsSet = new HashSet<>();
 
     /**
      * Instantiates a new User.
@@ -28,10 +34,10 @@ public class User {
     /**
      * Instantiates a new User.
      *
-     * @param userEmail the userEmail
+     * @param userName the userName
      */
-    public User(String userEmail) {
-        this.userEmail = userEmail;
+    public User(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -51,40 +57,62 @@ public class User {
     }
 
     /**
-     * This method sets the user's userEmail.
-     * @param userEmail the user's userEmail
+     * This method sets the user's userName.
+     * @param userName the user's userName
      */
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
-     * This method gets the user's userEmail.
-     * @return the userEmail
+     * This method gets the user's userName.
+     * @return the userName
      */
-    public String getUserEmail() {
-        return userEmail;
+    public String getUserName() {
+        return userName;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userEmail='" + userEmail + '\'' +
-                ", id=" + id +
-                '}';
+    /**
+     * Gets a user's pets.
+     * @return pets
+     */
+    public Set<Pet> getPetsSet() {
+        return petsSet;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return id == user.id && Objects.equals(userEmail, user.userEmail);
+    /**
+     * Sets the petsSet.
+     * @param petsSet pets Set
+     */
+    public void setPetsSet(Set<Pet> petsSet) {
+        this.petsSet = petsSet;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userEmail, id);
+    /**
+     * Adds a pet to the pets Set.
+     * @param pet
+     */
+    public void addPet(Pet pet) {
+        petsSet.add(pet);
+        pet.setUser(this);
     }
+
+    /**
+     * Sets the pets of a User.
+     * @param pet
+     */
+    public void setPet(Pet pet) {
+        pet.setUser(this);
+    }
+
+    /**
+     * Remove a pet.
+     * @param pet a pet
+     */
+    public void removePet(Pet pet) {
+        petsSet.remove(pet);
+        pet.setUser(null);
+    }
+
 }
 

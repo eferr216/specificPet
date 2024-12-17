@@ -35,6 +35,10 @@ public class Pet {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<AdditionalDetails> additionalDetailsSet = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name="user_id", foreignKey = @ForeignKey(name = "USER_ID_FK"))
+    private User user;
+
     /**
      * Instantiates a new Pet.
      */
@@ -49,13 +53,12 @@ public class Pet {
      * @param petColor the color
      * @param petWeight the weight
      */
-    public Pet(int petAge, String petSpecies, String petColor, int petWeight) {
-
-        //this.id = id;
+    public Pet(int petAge, String petSpecies, String petColor, int petWeight, User user) {
         this.petAge = petAge;
         this.petSpecies = petSpecies;
         this.petColor = petColor;
         this.petWeight = petWeight;
+        this.user = user;
     }
 
     /**
@@ -178,6 +181,22 @@ public class Pet {
     public void removeAdditionalDetails(AdditionalDetails additionalDetails) {
         additionalDetailsSet.remove(additionalDetails);
         additionalDetails.setPet(null);
+    }
+
+    /**
+     * This method returns the user that is associated with this Pet.
+     * @return a Pet
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * This method sets the User that is associated with this Pet
+     * @param user a User
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

@@ -11,7 +11,7 @@
 <h1>Edit Request</h1>
 
 <div class="homepageFormDiv">
-    <form action="searchPets?idToEdit=${petToEdit.id}" method="post">
+    <form action="searchPets?idToEdit=${petToEdit.id}&user=${param.user}" method="post">
         <div class="allAnimalTypesDiv">
             <div class="animalPictureAndCheckboxDiv">
                 <div class="animalPictureDiv">

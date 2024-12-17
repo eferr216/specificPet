@@ -32,12 +32,14 @@ public class SearchPets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         GenericDao petGenericDao = new GenericDao(Pet.class);
+        //GenericDao userGenericDao = new GenericDao(User.class);
         String clickedLink = req.getParameter("link");
 
         if (clickedLink.equals("petRequests")) {
+            String userName = req.getParameter("user");
             req.setAttribute("petRequests", petGenericDao.getAll());
             logger.info(petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
         else if (clickedLink.equals("viewAdditionalDetails")) {
@@ -110,8 +112,9 @@ public class SearchPets extends HttpServlet {
         }
         else if (req.getParameter("insertPetRequestButton") != null) {
             String petSpecies = "";
-            HttpSession session = req.getSession();
-            User user = (User) session.getAttribute("user");
+            String userName = req.getParameter("user");
+            List<User> users =  userDao.getByPropertyEqual("userName", userName);
+            User currentUser = users.get(0);
 
             if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
                 petSpecies += req.getParameter("dogCheckbox");
@@ -130,12 +133,12 @@ public class SearchPets extends HttpServlet {
             String petColor = req.getParameter("petColor");
             int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
 
-            Pet newPet = new Pet(maxAnimalAge, petSpecies, petColor, maxAnimalWeight);
+            Pet newPet = new Pet(maxAnimalAge, petSpecies, petColor, maxAnimalWeight, currentUser);
 
             petGenericDao.insert(newPet);
 
             req.setAttribute("petRequests", petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + currentUser.getUserName());
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertAdditionalDetailsButton") != null) {
@@ -176,6 +179,7 @@ public class SearchPets extends HttpServlet {
         }
         else if (req.getParameter("deleteRequest") != null) {
             int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
+            String userName = req.getParameter("user");
             Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
 
             petGenericDao.delete(selectedPet);
@@ -183,7 +187,7 @@ public class SearchPets extends HttpServlet {
             List<Pet> petRequests = petGenericDao.getAll();
 
             req.setAttribute("petRequests", petRequests);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("editRequest") != null) {
@@ -195,6 +199,9 @@ public class SearchPets extends HttpServlet {
         }
         else if (req.getParameter("confirmEditRequestButton") != null) {
             int idToEdit = Integer.parseInt(req.getParameter("idToEdit"));
+
+            String userName = req.getParameter("user");
+
             String newPetColor = req.getParameter("petColor");
             int newMaxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
             int newMaxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
@@ -210,7 +217,7 @@ public class SearchPets extends HttpServlet {
             logger.info(petToUpdate);
 
             req.setAttribute("petRequests", petGenericDao.getAll());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
 

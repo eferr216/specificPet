@@ -8,7 +8,7 @@
 </head>
 <body id="homepage">
 <jsp:include page="navigation.jsp" />
-<h1>What kind of pet are you looking for?</h1>
+<h1>What kind of pet are you looking for ${userName}?</h1>
 
 <div class="homepageFormDiv">
     <form action="searchPets" method="post">

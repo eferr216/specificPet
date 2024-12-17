@@ -30,7 +30,7 @@ class UserDaoTest {
     @Test
     void getByIdSuccess() {
         User retrievedUser = (User) userDao.getById(3);
-        assertEquals("george@gmail.com", retrievedUser.getUserEmail());
+        assertEquals("george", retrievedUser.getUserName());
     }
 
     /**
@@ -42,7 +42,7 @@ class UserDaoTest {
         int insertedUserId = userDao.insert(userToInsert);
         assertNotEquals(0, insertedUserId);
         User insertedUser = (User) userDao.getById(insertedUserId);
-        assertEquals("lloyd@gmail.com", insertedUser.getUserEmail());
+        assertEquals("lloyd@gmail.com", insertedUser.getUserName());
 
     }
 
@@ -52,11 +52,11 @@ class UserDaoTest {
     @Test
     void updateSuccess() {
         User userToUpdate = (User) userDao.getById(1);
-        userToUpdate.setUserEmail("newemail@gmail.com");
+        userToUpdate.setUserName("newemail@gmail.com");
         userDao.update(userToUpdate);
 
         User actualUser = (User) userDao.getById(1);
-        assertEquals("newemail@gmail.com", actualUser.getUserEmail());
+        assertEquals("newemail@gmail.com", actualUser.getUserName());
 
     }
 
@@ -83,9 +83,9 @@ class UserDaoTest {
      */
     @Test
     void getByPropertyEqual() {
-        List<User> users = userDao.getByPropertyEqual("userEmail", "george@gmail.com");
+        List<User> users = userDao.getByPropertyEqual("userName", "someguy");
         assertEquals(1, users.size());
-        assertEquals(3, users.get(0).getId());
+        assertEquals(7, users.get(0).getId());
     }
 
     /**
@@ -93,7 +93,7 @@ class UserDaoTest {
      */
     @Test
     void getByPropertyLike() {
-        List<User> users = userDao.getByPropertyLike("userEmail", "george");
+        List<User> users = userDao.getByPropertyLike("userName", "george");
         assertEquals(1, users.size());
         assertEquals(3, users.get(0).getId());
     }
