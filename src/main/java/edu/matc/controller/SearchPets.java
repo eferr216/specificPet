@@ -79,9 +79,17 @@ public class SearchPets extends HttpServlet {
         GenericDao petGenericDao = new GenericDao(Pet.class);
         GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
         GenericDao userDao = new GenericDao(User.class);
+        HttpSession session = req.getSession();
 
         if (req.getParameter("searchForPetsButton") != null) {
             String petSpecies = "";
+            String userName = (String) session.getAttribute("userName");
+            if (userName != null) {
+                List<User> users = (List) userDao.getByPropertyEqual("userName", userName);
+                User currentUser = users.get(0);
+                int currentUserId = currentUser.getId();
+                req.setAttribute("currentUserId", currentUserId);
+            }
 
             if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
                 petSpecies += req.getParameter("dogCheckbox");

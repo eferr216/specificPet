@@ -10,12 +10,14 @@
         <h1>Here are your search results:</h1>
         <c:forEach items="${petRequests}" var="petRequest">
             <div class="requestDiv">
-                <div class="editAndDeleteSection">
-                    <form action="searchPets?selectedPetId=${petRequest.id}" method="post">
-                        <input type="submit" name="deleteRequest" value="Delete" class="deleteSubmitButton">
-                        <input type="submit" name="editRequest" value="Edit">
-                    </form>
-                </div>
+                <c:if test="${not empty userName && not empty currentUserId && currentUserId == petRequest.user.id}">
+                    <div class="editAndDeleteSection">
+                        <form action="searchPets?selectedPetId=${petRequest.id}" method="post">
+                            <input type="submit" name="deleteRequest" value="Delete" class="deleteSubmitButton">
+                            <input type="submit" name="editRequest" value="Edit">
+                        </form>
+                    </div>
+                </c:if>
                 <div class="aboutSectionContainer">
                     <div class="aboutPetImageSection">
                         <c:if test="${petRequest.petSpecies == 'Dog'}">
@@ -40,7 +42,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="additionalDetailsLinkDiv"><a href="searchPets?link=viewAdditionalDetails&petRequestId=${petRequest.id}">View Additional Details</a></div>
+                <c:if test="${not empty userName && not empty currentUserId && currentUserId == petRequest.user.id}">
+                    <div class="additionalDetailsLinkDiv"><a href="searchPets?link=viewAdditionalDetails&petRequestId=${petRequest.id}">View Additional Details</a></div>
+                </c:if>
             </div>
         </c:forEach>
     </c:if>
