@@ -1,5 +1,6 @@
 package edu.matc.persistence;
 
+import edu.matc.entity.AdditionalDetails;
 import edu.matc.entity.Pet;
 import edu.matc.entity.User;
 import edu.matc.test.util.Database;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
+import java.util.Set;
 
 class PetDaoTest {
 
@@ -72,6 +74,28 @@ class PetDaoTest {
     void deleteSuccess() {
         petDao.delete(petDao.getById(2));
         assertNull(petDao.getById(2));
+    }
+
+    /**
+     * Delete with details.
+     */
+    @Test
+    void deleteWithDetailsSuccess() {
+        // get the associated details
+        Pet petToBeDeleted = (Pet) petDao.getById(4);
+        Set<AdditionalDetails> additionalDetails = petToBeDeleted.getAdditionalDetailsSet();
+        AdditionalDetails[] additionalDetailsArray = additionalDetails.toArray(new AdditionalDetails[0]); // Convert Set to an array
+
+        // delete the pet
+        petDao.delete(petToBeDeleted);
+        // verify the pet was deleted
+        assertNull(petDao.getById(4));
+
+        // verify the additional details were also deleted
+        for (int i = 0; i >= additionalDetailsArray.length; i++) {
+            AdditionalDetails additionalDetail = additionalDetailsArray[i];
+            assertNull(additionalDetail);
+        }
     }
 
     /**

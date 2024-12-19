@@ -1,15 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>Specific Pet</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
+<jsp:include page="header.jsp" />
 <body id="homepage">
 <jsp:include page="navigation.jsp" />
-<h1>What kind of pet are you looking for ${userName}?</h1>
-
+<h1>What kind of pet are you looking for?</h1>
 <div class="homepageFormDiv">
     <form action="searchPets" method="post">
         <div class="allAnimalTypesDiv">

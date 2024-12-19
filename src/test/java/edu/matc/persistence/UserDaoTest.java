@@ -1,11 +1,14 @@
 package edu.matc.persistence;
 
+import edu.matc.entity.AdditionalDetails;
+import edu.matc.entity.Pet;
 import edu.matc.entity.User;
 import edu.matc.test.util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
+import java.util.Set;
 
 class UserDaoTest {
 
@@ -67,6 +70,28 @@ class UserDaoTest {
     void deleteSuccess() {
         userDao.delete(userDao.getById(2));
         assertNull(userDao.getById(2));
+    }
+
+    /**
+     * Delete user along with its pets and details.
+     */
+    @Test
+    void deleteWithPetsSuccess() {
+        // get the associated pets
+        User userToBeDeleted = (User) userDao.getById(3);
+        Set<Pet> pets = userToBeDeleted.getPetsSet();
+        Pet[] petsArray = pets.toArray(new Pet[0]); // Convert Set to an array
+
+        // delete the user
+        userDao.delete(userToBeDeleted);
+        // verify the user was deleted
+        assertNull(userDao.getById(3));
+
+        // verify the pets were also deleted
+        for (int i = 0; i >= petsArray.length; i++) {
+            Pet pet = petsArray[i];
+            assertNull(pet);
+        }
     }
 
     /**

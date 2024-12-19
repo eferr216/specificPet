@@ -8,7 +8,7 @@
             </c:when>
             <c:otherwise>
                 <li><a href="searchPets?link=petRequests&user=${userName}">Requests</a></li>
-                <!--<li><a href="#">Bookmarks</a></li>-->
+                <li>[User - ${userName}]</li>
             </c:otherwise>
         </c:choose>
     </ul>

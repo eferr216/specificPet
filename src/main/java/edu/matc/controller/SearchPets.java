@@ -32,13 +32,15 @@ public class SearchPets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         GenericDao petGenericDao = new GenericDao(Pet.class);
-        //GenericDao userGenericDao = new GenericDao(User.class);
+        GenericDao userDao = new GenericDao(User.class);
         String clickedLink = req.getParameter("link");
 
         if (clickedLink.equals("petRequests")) {
             String userName = req.getParameter("user");
-            req.setAttribute("petRequests", petGenericDao.getAll());
-            logger.info(petGenericDao.getAll());
+            List<User> users =  (List) userDao.getByPropertyEqual("userName", userName);
+            Set<Pet> pets = users.get(0).getPetsSet();
+
+            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
@@ -134,10 +136,10 @@ public class SearchPets extends HttpServlet {
             int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
 
             Pet newPet = new Pet(maxAnimalAge, petSpecies, petColor, maxAnimalWeight, currentUser);
-
             petGenericDao.insert(newPet);
 
-            req.setAttribute("petRequests", petGenericDao.getAll());
+            List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
+            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + currentUser.getUserName());
             dispatcher.forward(req, res);
         }
@@ -180,13 +182,14 @@ public class SearchPets extends HttpServlet {
         else if (req.getParameter("deleteRequest") != null) {
             int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
             String userName = req.getParameter("user");
+            List<User> users = userDao.getByPropertyEqual("userName", userName);
+            User currentUser = users.get(0);
             Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
 
             petGenericDao.delete(selectedPet);
 
-            List<Pet> petRequests = petGenericDao.getAll();
-
-            req.setAttribute("petRequests", petRequests);
+            List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
+            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
@@ -199,8 +202,9 @@ public class SearchPets extends HttpServlet {
         }
         else if (req.getParameter("confirmEditRequestButton") != null) {
             int idToEdit = Integer.parseInt(req.getParameter("idToEdit"));
-
             String userName = req.getParameter("user");
+            List<User> users = userDao.getByPropertyEqual("userName", userName);
+            User currentUser = users.get(0);
 
             String newPetColor = req.getParameter("petColor");
             int newMaxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
@@ -214,9 +218,9 @@ public class SearchPets extends HttpServlet {
 
             petGenericDao.update(petToUpdate);
 
-            logger.info(petToUpdate);
 
-            req.setAttribute("petRequests", petGenericDao.getAll());
+            List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
+            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
