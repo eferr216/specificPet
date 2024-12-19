@@ -16,5 +16,5 @@
 | 11/15/24 | Added Log4j to indie project.                                                 | 5     |       |
 | 11/21/24 | Added Hibernate annotations to indie project classes.                         | 3     |       |
 | 11/27/24 | Added Cognito functionality to indie project.                                 | 5     |       |
-| 12/3/24  |                                                                               |       |       |
-| 12/9/24  |                                                                               |       |       |
+| 12/3/24  | Created user-specific functionality. Full CRUD operations on all 3 tables also.                                                                              | 15      |       |
+| 12/9/24  | Added better test methods. Eliminated duplicate code in JSPs.                                                                              | 12      |       |

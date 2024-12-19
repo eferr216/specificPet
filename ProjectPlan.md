@@ -87,17 +87,18 @@ For those using this as a model, continue adding weekly tasks by considering:
 #### This week my focus is getting set up for a code review
 - [ ] Ensure my project meets expectations
 
-### Week 15
-- [ ] Implement Feedback from Week 14 review
+### Week 15 
 - [ ] Final Presentation
-- [ ] Create video, add video link to readme.md
+- [ ] Full CRUD operations now working as expected.
 - [ ] Finalize all documentation
-- [ ] Code quality check
+- [ ] Added test methods to get code coverage up to par.
 - [ ] Weekly journal entry
 
 ### Week 16
-- [ ] Weekly journal entry
-- [ ] Final touches before code complete
+- [ ] Eliminated duplicate code in JSPs.
+- [ ] Added test methods to ensure deletion of parent items removed its children also.
+- [ ] Username displayed in navigation when user is logged in.
+- [ ] Users can see their pet requests.
 
 
 
