@@ -7,7 +7,6 @@ import edu.matc.persistence.GenericDao;
 import edu.matc.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -139,7 +138,6 @@ public class SearchPetsHelper implements PropertiesLoader {
 
         petGenericDao.update(petToUpdate);
 
-
         List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
         req.setAttribute("petRequests", pets);
 
@@ -202,6 +200,18 @@ public class SearchPetsHelper implements PropertiesLoader {
     }
 
     /**
+     * This method returns a Pet according to a specific petId.
+     * @param req the HttpServletRequest
+     * @param petGenericDao the petDao
+     * @return a Pet
+     */
+    private Pet getPetObjectFromPetId(HttpServletRequest req, GenericDao petGenericDao) {
+        int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
+        Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+        return selectedPet;
+    }
+
+    /**
      * This method returns a User object as specificed by a given userName.
      * @param userName the userName
      * @param userDao the userDao
@@ -233,18 +243,6 @@ public class SearchPetsHelper implements PropertiesLoader {
 
         req.setAttribute("selectedPet", selectedPet);
         req.setAttribute("additionalDetailsSet", additionalDetailsSet);
-    }
-
-    /**
-     * This method returns a Pet according to a specific petId.
-     * @param req the HttpServletRequest
-     * @param petGenericDao the petDao
-     * @return a Pet
-     */
-    private Pet getPetObjectFromPetId(HttpServletRequest req, GenericDao petGenericDao) {
-        int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
-        Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
-        return selectedPet;
     }
 
     /**

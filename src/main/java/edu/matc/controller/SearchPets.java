@@ -13,13 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.servlet.http.HttpSession;
-import edu.matc.controller.SearchPetsHelper;
-
 
 /**
  * The servlet is responsible for performing all of the CRUD operations on our DB.
