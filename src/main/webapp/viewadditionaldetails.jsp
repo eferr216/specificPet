@@ -33,7 +33,7 @@
             </div>
     </div>
     <div class="addNewAdditionalDetailsDiv">
-        <a href="searchPets?link=addNewAdditionalDetails&selectedPetId=${selectedPet.id}"><span class="material-symbols-outlined">add_circle</span></a><span>-    Add new additional details</span>
+        <a href="searchPets?link=addNewAdditionalDetails&petRequestId=${selectedPet.id}"><span class="material-symbols-outlined">add_circle</span></a><span>-    Add new additional details</span>
     </div>
 
     <c:forEach items="${additionalDetailsSet}" var="additionalDetails">

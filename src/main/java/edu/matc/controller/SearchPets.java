@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
+import edu.matc.controller.SearchPetsHelper;
 
 
 /**
@@ -28,46 +29,30 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/searchPets"}
 )
 public class SearchPets extends HttpServlet {
+    GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
+    GenericDao petGenericDao = new GenericDao(Pet.class);
+    GenericDao userDao = new GenericDao(User.class);
     private final Logger logger = LogManager.getLogger(this.getClass());
+    SearchPetsHelper searchPetsHelper = new SearchPetsHelper();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        GenericDao petGenericDao = new GenericDao(Pet.class);
-        GenericDao userDao = new GenericDao(User.class);
         String clickedLink = req.getParameter("link");
 
         if (clickedLink.equals("petRequests")) {
-            String userName = req.getParameter("user");
-            List<User> users =  (List) userDao.getByPropertyEqual("userName", userName);
-            Set<Pet> pets = users.get(0).getPetsSet();
+            String userName = searchPetsHelper.getUserPetRequests(req, userDao);
 
-            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
         else if (clickedLink.equals("viewAdditionalDetails")) {
-            int petRequestId = Integer.parseInt(req.getParameter("petRequestId"));
-
-            Pet selectedPet = (Pet) petGenericDao.getById(petRequestId);
-
-            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
-
-            req.setAttribute("selectedPet", selectedPet);
-            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
-
+            searchPetsHelper.getSpecificPetAdditionalDetails(req, petGenericDao);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
         else if (clickedLink.equals("addNewAdditionalDetails")) {
-            int petRequestId = Integer.parseInt(req.getParameter("selectedPetId"));
-
-            Pet selectedPet = (Pet) petGenericDao.getById(petRequestId);
-
-            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
-
-            req.setAttribute("selectedPet", selectedPet);
-            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
-
+            searchPetsHelper.getSpecificPetAdditionalDetails(req, petGenericDao);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/addadditionaldetails.jsp");
             dispatcher.forward(req, res);
@@ -76,159 +61,47 @@ public class SearchPets extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        GenericDao petGenericDao = new GenericDao(Pet.class);
-        GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
-        GenericDao userDao = new GenericDao(User.class);
         HttpSession session = req.getSession();
 
         if (req.getParameter("searchForPetsButton") != null) {
-            String petSpecies = "";
-            String userName = (String) session.getAttribute("userName");
-            if (userName != null) {
-                List<User> users = (List) userDao.getByPropertyEqual("userName", userName);
-                User currentUser = users.get(0);
-                int currentUserId = currentUser.getId();
-                req.setAttribute("currentUserId", currentUserId);
-            }
+            searchPetsHelper.searchForPets(session, userDao, req, petGenericDao);
 
-            if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
-                petSpecies += req.getParameter("dogCheckbox");
-            }
-            if (req.getParameter("catCheckbox") != null && req.getParameter("catCheckbox").equals("Cat")) {
-                petSpecies += req.getParameter("catCheckbox");
-            }
-            if (req.getParameter("turtleCheckbox") != null && req.getParameter("turtleCheckbox").equals("Turtle")) {
-                petSpecies += req.getParameter("turtleCheckbox");
-            }
-            if (req.getParameter("birdCheckbox") != null && req.getParameter("birdCheckbox").equals("Bird")) {
-                petSpecies += req.getParameter("birdCheckbox");
-            }
-
-            int maxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
-            String petColor = req.getParameter("petColor");
-            int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
-
-            Map<String, Object> criteria = new HashMap<>();
-            criteria.put("petAge", maxAnimalAge);
-            criteria.put("petSpecies", petSpecies);
-            criteria.put("petColor", petColor);
-            criteria.put("petWeight", maxAnimalWeight);
-
-            List<User> pets = petGenericDao.getByPropertiesEqual(criteria);
-
-            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewresults.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertPetRequestButton") != null) {
-            String petSpecies = "";
-            String userName = req.getParameter("user");
-            List<User> users =  userDao.getByPropertyEqual("userName", userName);
-            User currentUser = users.get(0);
+            User currentUser = searchPetsHelper.insertPet(req, userDao, petGenericDao);
 
-            if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
-                petSpecies += req.getParameter("dogCheckbox");
-            }
-            if (req.getParameter("catCheckbox") != null && req.getParameter("catCheckbox").equals("Cat")) {
-                petSpecies += req.getParameter("catCheckbox");
-            }
-            if (req.getParameter("turtleCheckbox") != null && req.getParameter("turtleCheckbox").equals("Turtle")) {
-                petSpecies += req.getParameter("turtleCheckbox");
-            }
-            if (req.getParameter("birdCheckbox") != null && req.getParameter("birdCheckbox").equals("Bird")) {
-                petSpecies += req.getParameter("birdCheckbox");
-            }
-
-            int maxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
-            String petColor = req.getParameter("petColor");
-            int maxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
-
-            Pet newPet = new Pet(maxAnimalAge, petSpecies, petColor, maxAnimalWeight, currentUser);
-            petGenericDao.insert(newPet);
-
-            List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
-            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + currentUser.getUserName());
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertAdditionalDetailsButton") != null) {
-            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
-            Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+            searchPetsHelper.insertAdditionalDetails(req, petGenericDao, additionalDetailsDao);
 
-            String additionalDetailsText = req.getParameter("additionalDetailsText");
-
-            AdditionalDetails newAdditionalDetails = new AdditionalDetails(additionalDetailsText, selectedPet);
-            selectedPet.addAdditionalDetails(newAdditionalDetails);
-
-            additionalDetailsDao.insert(newAdditionalDetails);
-
-            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
-
-            req.setAttribute("selectedPet", selectedPet);
-            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("deleteDetails") != null) {
-            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
-            Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
-
-            int idToDelete = Integer.parseInt(req.getParameter("detailsId"));
-
-            selectedPet.removeAdditionalDetails((AdditionalDetails) additionalDetailsDao.getById(idToDelete));
-
-            additionalDetailsDao.delete(additionalDetailsDao.getById(idToDelete));
-
-            Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
-
-            req.setAttribute("selectedPet", selectedPet);
-            req.setAttribute("additionalDetailsSet", additionalDetailsSet);
+            searchPetsHelper.deleteAdditionalDetails(req, petGenericDao, additionalDetailsDao);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("deleteRequest") != null) {
-            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
-            String userName = req.getParameter("user");
-            List<User> users = userDao.getByPropertyEqual("userName", userName);
-            User currentUser = users.get(0);
-            Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+            String userName = searchPetsHelper.deletePet(req, userDao, petGenericDao);
 
-            petGenericDao.delete(selectedPet);
-
-            List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
-            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("editRequest") != null) {
-            int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
-            Pet petToEdit = (Pet) petGenericDao.getById(selectedPetId);
-            req.setAttribute("petToEdit", petToEdit);
+            searchPetsHelper.getPetToEdit(req, petGenericDao);
+
             RequestDispatcher dispatcher = req.getRequestDispatcher("/editrequest.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("confirmEditRequestButton") != null) {
-            int idToEdit = Integer.parseInt(req.getParameter("idToEdit"));
-            String userName = req.getParameter("user");
-            List<User> users = userDao.getByPropertyEqual("userName", userName);
-            User currentUser = users.get(0);
+            String userName = searchPetsHelper.editPet(req, userDao, petGenericDao);
 
-            String newPetColor = req.getParameter("petColor");
-            int newMaxAnimalAge = Integer.parseInt(req.getParameter("maxAnimalAge"));
-            int newMaxAnimalWeight = Integer.parseInt(req.getParameter("maxAnimalWeight"));
-
-            Pet petToUpdate = (Pet) petGenericDao.getById(idToEdit);
-
-            petToUpdate.setPetColor(newPetColor);
-            petToUpdate.setPetAge(newMaxAnimalAge);
-            petToUpdate.setPetWeight(newMaxAnimalWeight);
-
-            petGenericDao.update(petToUpdate);
-
-
-            List<Pet> pets = petGenericDao.getByPropertyEqual("user", currentUser);
-            req.setAttribute("petRequests", pets);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
