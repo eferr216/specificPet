@@ -15,12 +15,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** Begins the authentication process using AWS Cognito
- *
+/**
+ * This class is responsible for the interactions that occur between the database
+ * and the data that is passed to it.
  */
 public class SearchPetsHelper implements PropertiesLoader {
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * This method gets all of the pets associated with a userName.
+     * @param req the HttpServletRequest
+     * @param userDao the userDao
+     * @return the userName
+     */
     public String getUserPetRequests(HttpServletRequest req, GenericDao userDao) {
         String userName = req.getParameter("user");
         List<User> users =  (List) userDao.getByPropertyEqual("userName", userName);
@@ -31,6 +38,11 @@ public class SearchPetsHelper implements PropertiesLoader {
         return userName;
     }
 
+    /**
+     * This method gets the additional details that are associated with any given pet.
+     * @param req the HttpServletRequest
+     * @param petGenericDao the petDao
+     */
     public void getSpecificPetAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao)  {
         int petRequestId = Integer.parseInt(req.getParameter("petRequestId"));
         Pet selectedPet = (Pet) petGenericDao.getById(petRequestId);
@@ -40,6 +52,14 @@ public class SearchPetsHelper implements PropertiesLoader {
         req.setAttribute("additionalDetailsSet", additionalDetailsSet);
     }
 
+    /**
+     * This method searches the database for any pets that match the criteria as specified
+     * by the user.
+     * @param session the HttpSession
+     * @param userDao the userDao
+     * @param req the HttpServletRequest
+     * @param petGenericDao the petDao
+     */
     public void searchForPets(HttpSession session, GenericDao userDao, HttpServletRequest req, GenericDao petGenericDao) {
         String userName = (String) session.getAttribute("userName");
 
@@ -67,6 +87,13 @@ public class SearchPetsHelper implements PropertiesLoader {
         req.setAttribute("petRequests", pets);
     }
 
+    /**
+     * This method inserts a pet into the DB.
+     * @param req the HttpServletRequest
+     * @param userDao the userDao
+     * @param petGenericDao the petDao
+     * @return the User
+     */
     public User insertPet(HttpServletRequest req, GenericDao userDao, GenericDao petGenericDao) {
         String userName = req.getParameter("user");
         List<User> users =  userDao.getByPropertyEqual("userName", userName);
@@ -86,6 +113,13 @@ public class SearchPetsHelper implements PropertiesLoader {
         return currentUser;
     }
 
+    /**
+     * This method edits a Pet that is in the DB.
+     * @param req the HttpServletRequest
+     * @param userDao the userDao
+     * @param petGenericDao the petDao
+     * @return the userName
+     */
     public String editPet(HttpServletRequest req, GenericDao userDao, GenericDao petGenericDao) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         String userName = req.getParameter("user");
@@ -112,6 +146,13 @@ public class SearchPetsHelper implements PropertiesLoader {
         return userName;
     }
 
+    /**
+     * This method deletes a Pet from the DB.
+     * @param req the HttpServletRequest
+     * @param userDao the userDao
+     * @param petGenericDao the petDao
+     * @return the userName
+     */
     public String deletePet(HttpServletRequest req, GenericDao userDao, GenericDao petGenericDao) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         String userName = req.getParameter("user");
@@ -127,6 +168,11 @@ public class SearchPetsHelper implements PropertiesLoader {
         return userName;
     }
 
+    /**
+     * This method returns the chosen petSpecies.
+     * @param req the HttpServletRequest
+     * @return the petSpecies
+     */
     private String getPetSpecies(HttpServletRequest req) {
         String petSpecies = "";
         if (req.getParameter("dogCheckbox") != null && req.getParameter("dogCheckbox").equals("Dog")) {
@@ -144,21 +190,37 @@ public class SearchPetsHelper implements PropertiesLoader {
         return petSpecies;
     }
 
+    /**
+     * This method sets a Pet object as a req attribute.
+     * @param req the HttpServletReqest
+     * @param petGenericDao the petDao
+     */
     public void getPetToEdit(HttpServletRequest req, GenericDao petGenericDao) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         Pet petToEdit = (Pet) petGenericDao.getById(selectedPetId);
         req.setAttribute("petToEdit", petToEdit);
     }
 
+    /**
+     * This method returns a User object as specificed by a given userName.
+     * @param userName the userName
+     * @param userDao the userDao
+     * @return a User
+     */
     private User getUserObjectFromUserName(String userName, GenericDao userDao) {
         List<User> users = userDao.getByPropertyEqual("userName", userName);
         User currentUser = users.get(0);
         return currentUser;
     }
 
+    /**
+     * This method inserts an additional details entry into the DB.
+     * @param req the HttpServletRequest
+     * @param petGenericDao the petDao
+     * @param additionalDetailsDao the additionalDetailsDao
+     */
     public void insertAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao, GenericDao additionalDetailsDao) {
-        int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
-        Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+        Pet selectedPet = getPetObjectFromPetId(req, petGenericDao);
 
         String additionalDetailsText = req.getParameter("additionalDetailsText");
 
@@ -173,9 +235,26 @@ public class SearchPetsHelper implements PropertiesLoader {
         req.setAttribute("additionalDetailsSet", additionalDetailsSet);
     }
 
-    public void deleteAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao, GenericDao additionalDetailsDao) {
+    /**
+     * This method returns a Pet according to a specific petId.
+     * @param req the HttpServletRequest
+     * @param petGenericDao the petDao
+     * @return a Pet
+     */
+    private Pet getPetObjectFromPetId(HttpServletRequest req, GenericDao petGenericDao) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
+        return selectedPet;
+    }
+
+    /**
+     * This method deletes an additional details entry from the DB.
+     * @param req the HttpServletRequest
+     * @param petGenericDao the petDao
+     * @param additionalDetailsDao the additionalDetailsDao
+     */
+    public void deleteAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao, GenericDao additionalDetailsDao) {
+        Pet selectedPet = getPetObjectFromPetId(req, petGenericDao);
 
         int idToDelete = Integer.parseInt(req.getParameter("detailsId"));
 

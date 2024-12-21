@@ -99,6 +99,7 @@ For those using this as a model, continue adding weekly tasks by considering:
 - [ ] Added test methods to ensure deletion of parent items removed its children also.
 - [ ] Username displayed in navigation when user is logged in.
 - [ ] Users can see their pet requests.
+- [ ] Refactored SearchPets class. Made helper class
 
 
 
