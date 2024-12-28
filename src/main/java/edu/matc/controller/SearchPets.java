@@ -23,9 +23,9 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/searchPets"}
 )
 public class SearchPets extends HttpServlet {
-    GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
-    GenericDao petGenericDao = new GenericDao(Pet.class);
-    GenericDao userDao = new GenericDao(User.class);
+    //GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
+    //GenericDao petGenericDao = new GenericDao(Pet.class);
+    //GenericDao userDao = new GenericDao(User.class);
     private final Logger logger = LogManager.getLogger(this.getClass());
     SearchPetsHelper searchPetsHelper = new SearchPetsHelper();
 
@@ -34,19 +34,19 @@ public class SearchPets extends HttpServlet {
         String clickedLink = req.getParameter("link");
 
         if (clickedLink.equals("petRequests")) {
-            String userName = searchPetsHelper.getUserPetRequests(req, userDao);
+            String userName = searchPetsHelper.getUserPetRequests(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
         else if (clickedLink.equals("viewAdditionalDetails")) {
-            searchPetsHelper.getSpecificPetAdditionalDetails(req, petGenericDao);
+            searchPetsHelper.getSpecificPetAdditionalDetails(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
         else if (clickedLink.equals("addNewAdditionalDetails")) {
-            searchPetsHelper.getSpecificPetAdditionalDetails(req, petGenericDao);
+            searchPetsHelper.getSpecificPetAdditionalDetails(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/addadditionaldetails.jsp");
             dispatcher.forward(req, res);
@@ -58,43 +58,43 @@ public class SearchPets extends HttpServlet {
         HttpSession session = req.getSession();
 
         if (req.getParameter("searchForPetsButton") != null) {
-            searchPetsHelper.searchForPets(session, userDao, req, petGenericDao);
+            searchPetsHelper.searchForPets(session, req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewresults.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertPetRequestButton") != null) {
-            User currentUser = searchPetsHelper.insertPet(req, userDao, petGenericDao);
+            User currentUser = searchPetsHelper.insertPet(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + currentUser.getUserName());
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("insertAdditionalDetailsButton") != null) {
-            searchPetsHelper.insertAdditionalDetails(req, petGenericDao, additionalDetailsDao);
+            searchPetsHelper.insertAdditionalDetails(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("deleteDetails") != null) {
-            searchPetsHelper.deleteAdditionalDetails(req, petGenericDao, additionalDetailsDao);
+            searchPetsHelper.deleteAdditionalDetails(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewadditionaldetails.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("deleteRequest") != null) {
-            String userName = searchPetsHelper.deletePet(req, userDao, petGenericDao);
+            String userName = searchPetsHelper.deletePet(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("editRequest") != null) {
-            searchPetsHelper.getPetToEdit(req, petGenericDao);
+            searchPetsHelper.getPetToEdit(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/editrequest.jsp");
             dispatcher.forward(req, res);
         }
         else if (req.getParameter("confirmEditRequestButton") != null) {
-            String userName = searchPetsHelper.editPet(req, userDao, petGenericDao);
+            String userName = searchPetsHelper.editPet(req);
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/viewrequests.jsp?user=" + userName);
             dispatcher.forward(req, res);

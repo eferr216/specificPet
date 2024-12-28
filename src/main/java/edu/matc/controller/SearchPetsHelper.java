@@ -19,15 +19,17 @@ import java.util.Set;
  * and the data that is passed to it.
  */
 public class SearchPetsHelper implements PropertiesLoader {
+    GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
+    GenericDao petGenericDao = new GenericDao(Pet.class);
+    GenericDao userDao = new GenericDao(User.class);
     private final Logger logger = LogManager.getLogger(this.getClass());
 
     /**
      * This method gets all of the pets associated with a userName.
      * @param req the HttpServletRequest
-     * @param userDao the userDao
      * @return the userName
      */
-    public String getUserPetRequests(HttpServletRequest req, GenericDao userDao) {
+    public String getUserPetRequests(HttpServletRequest req) {
         String userName = req.getParameter("user");
         List<User> users =  (List) userDao.getByPropertyEqual("userName", userName);
         Set<Pet> pets = users.get(0).getPetsSet();
@@ -40,9 +42,8 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method gets the additional details that are associated with any given pet.
      * @param req the HttpServletRequest
-     * @param petGenericDao the petDao
      */
-    public void getSpecificPetAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao)  {
+    public void getSpecificPetAdditionalDetails(HttpServletRequest req)  {
         int petRequestId = Integer.parseInt(req.getParameter("petRequestId"));
         Pet selectedPet = (Pet) petGenericDao.getById(petRequestId);
         Set<AdditionalDetails> additionalDetailsSet = selectedPet.getAdditionalDetailsSet();
@@ -55,11 +56,9 @@ public class SearchPetsHelper implements PropertiesLoader {
      * This method searches the database for any pets that match the criteria as specified
      * by the user.
      * @param session the HttpSession
-     * @param userDao the userDao
      * @param req the HttpServletRequest
-     * @param petGenericDao the petDao
      */
-    public void searchForPets(HttpSession session, GenericDao userDao, HttpServletRequest req, GenericDao petGenericDao) {
+    public void searchForPets(HttpSession session, HttpServletRequest req) {
         String userName = (String) session.getAttribute("userName");
 
         // Check to see if userName session attribute is set
@@ -89,11 +88,9 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method inserts a pet into the DB.
      * @param req the HttpServletRequest
-     * @param userDao the userDao
-     * @param petGenericDao the petDao
      * @return the User
      */
-    public User insertPet(HttpServletRequest req, GenericDao userDao, GenericDao petGenericDao) {
+    public User insertPet(HttpServletRequest req) {
         String userName = req.getParameter("user");
         List<User> users =  userDao.getByPropertyEqual("userName", userName);
         User currentUser = users.get(0);
@@ -115,14 +112,12 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method edits a Pet that is in the DB.
      * @param req the HttpServletRequest
-     * @param userDao the userDao
-     * @param petGenericDao the petDao
      * @return the userName
      */
-    public String editPet(HttpServletRequest req, GenericDao userDao, GenericDao petGenericDao) {
+    public String editPet(HttpServletRequest req) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         String userName = req.getParameter("user");
-        User currentUser = getUserObjectFromUserName(userName, userDao);
+        User currentUser = getUserObjectFromUserName(userName);
 
         String petSpecies = getPetSpecies(req);
         String newPetColor = req.getParameter("petColor");
@@ -147,14 +142,12 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method deletes a Pet from the DB.
      * @param req the HttpServletRequest
-     * @param userDao the userDao
-     * @param petGenericDao the petDao
      * @return the userName
      */
-    public String deletePet(HttpServletRequest req, GenericDao userDao, GenericDao petGenericDao) {
+    public String deletePet(HttpServletRequest req) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         String userName = req.getParameter("user");
-        User currentUser = getUserObjectFromUserName(userName, userDao);
+        User currentUser = getUserObjectFromUserName(userName);
 
         Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
 
@@ -191,9 +184,8 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method sets a Pet object as a req attribute.
      * @param req the HttpServletReqest
-     * @param petGenericDao the petDao
      */
-    public void getPetToEdit(HttpServletRequest req, GenericDao petGenericDao) {
+    public void getPetToEdit(HttpServletRequest req) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         Pet petToEdit = (Pet) petGenericDao.getById(selectedPetId);
         req.setAttribute("petToEdit", petToEdit);
@@ -202,10 +194,9 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method returns a Pet according to a specific petId.
      * @param req the HttpServletRequest
-     * @param petGenericDao the petDao
      * @return a Pet
      */
-    private Pet getPetObjectFromPetId(HttpServletRequest req, GenericDao petGenericDao) {
+    private Pet getPetObjectFromPetId(HttpServletRequest req) {
         int selectedPetId = Integer.parseInt(req.getParameter("selectedPetId"));
         Pet selectedPet = (Pet) petGenericDao.getById(selectedPetId);
         return selectedPet;
@@ -214,10 +205,9 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method returns a User object as specificed by a given userName.
      * @param userName the userName
-     * @param userDao the userDao
      * @return a User
      */
-    private User getUserObjectFromUserName(String userName, GenericDao userDao) {
+    private User getUserObjectFromUserName(String userName) {
         List<User> users = userDao.getByPropertyEqual("userName", userName);
         User currentUser = users.get(0);
         return currentUser;
@@ -226,11 +216,9 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method inserts an additional details entry into the DB.
      * @param req the HttpServletRequest
-     * @param petGenericDao the petDao
-     * @param additionalDetailsDao the additionalDetailsDao
      */
-    public void insertAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao, GenericDao additionalDetailsDao) {
-        Pet selectedPet = getPetObjectFromPetId(req, petGenericDao);
+    public void insertAdditionalDetails(HttpServletRequest req) {
+        Pet selectedPet = getPetObjectFromPetId(req);
 
         String additionalDetailsText = req.getParameter("additionalDetailsText");
 
@@ -248,11 +236,9 @@ public class SearchPetsHelper implements PropertiesLoader {
     /**
      * This method deletes an additional details entry from the DB.
      * @param req the HttpServletRequest
-     * @param petGenericDao the petDao
-     * @param additionalDetailsDao the additionalDetailsDao
      */
-    public void deleteAdditionalDetails(HttpServletRequest req, GenericDao petGenericDao, GenericDao additionalDetailsDao) {
-        Pet selectedPet = getPetObjectFromPetId(req, petGenericDao);
+    public void deleteAdditionalDetails(HttpServletRequest req) {
+        Pet selectedPet = getPetObjectFromPetId(req);
 
         int idToDelete = Integer.parseInt(req.getParameter("detailsId"));
 
