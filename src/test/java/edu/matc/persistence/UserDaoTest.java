@@ -16,6 +16,7 @@ class UserDaoTest {
      * The Dao.
      */
     GenericDao userDao;
+    GenericDao petDao;
 
     /**
      * Sets up the user table with fresh data, and instantiates the userdao.
@@ -25,6 +26,7 @@ class UserDaoTest {
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
         userDao = new GenericDao<>(User.class);
+        petDao = new GenericDao<>(Pet.class);
     }
 
     /**
@@ -81,6 +83,12 @@ class UserDaoTest {
         User userToBeDeleted = (User) userDao.getById(3);
         Set<Pet> pets = userToBeDeleted.getPetsSet();
         Pet[] petsArray = pets.toArray(new Pet[0]); // Convert Set to an array
+        int petsArraySize = petsArray.length;
+
+        assertEquals(2, petsArraySize);
+
+        int firstId = petsArray[0].getId();
+        int secondId = petsArray[1].getId();
 
         // delete the user
         userDao.delete(userToBeDeleted);
@@ -88,10 +96,8 @@ class UserDaoTest {
         assertNull(userDao.getById(3));
 
         // verify the pets were also deleted
-        for (int i = 0; i >= petsArray.length; i++) {
-            Pet pet = petsArray[i];
-            assertNull(pet);
-        }
+        assertNull(petDao.getById(firstId));
+        assertNull(petDao.getById(secondId));
     }
 
     /**

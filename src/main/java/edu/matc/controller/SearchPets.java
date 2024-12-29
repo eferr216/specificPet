@@ -23,9 +23,6 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/searchPets"}
 )
 public class SearchPets extends HttpServlet {
-    //GenericDao additionalDetailsDao = new GenericDao(AdditionalDetails.class);
-    //GenericDao petGenericDao = new GenericDao(Pet.class);
-    //GenericDao userDao = new GenericDao(User.class);
     private final Logger logger = LogManager.getLogger(this.getClass());
     SearchPetsHelper searchPetsHelper = new SearchPetsHelper();
 

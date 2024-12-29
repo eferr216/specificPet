@@ -17,6 +17,7 @@ class PetDaoTest {
      */
     GenericDao petDao;
     GenericDao userDao;
+    GenericDao additionalDetailsDao;
 
     /**
      * Sets up the book table with fresh data, and instantiates the bookdao.
@@ -27,6 +28,7 @@ class PetDaoTest {
         database.runSQL("cleandb.sql");
         petDao = new GenericDao<>(Pet.class);
         userDao = new GenericDao<>(User.class);
+        additionalDetailsDao = new GenericDao(AdditionalDetails.class);
     }
 
     /**
@@ -85,6 +87,13 @@ class PetDaoTest {
         Pet petToBeDeleted = (Pet) petDao.getById(4);
         Set<AdditionalDetails> additionalDetails = petToBeDeleted.getAdditionalDetailsSet();
         AdditionalDetails[] additionalDetailsArray = additionalDetails.toArray(new AdditionalDetails[0]); // Convert Set to an array
+        int detailsArraySize = additionalDetailsArray.length;
+
+        assertEquals(3, detailsArraySize);
+
+        int firstId = additionalDetailsArray[0].getId();
+        int secondId = additionalDetailsArray[1].getId();
+        int thirdId = additionalDetailsArray[2].getId();
 
         // delete the pet
         petDao.delete(petToBeDeleted);
@@ -92,10 +101,9 @@ class PetDaoTest {
         assertNull(petDao.getById(4));
 
         // verify the additional details were also deleted
-        for (int i = 0; i >= additionalDetailsArray.length; i++) {
-            AdditionalDetails additionalDetail = additionalDetailsArray[i];
-            assertNull(additionalDetail);
-        }
+        assertNull(additionalDetailsDao.getById(firstId));
+        assertNull(additionalDetailsDao.getById(secondId));
+        assertNull(additionalDetailsDao.getById(thirdId));
     }
 
     /**
